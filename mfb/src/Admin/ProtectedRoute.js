@@ -6,7 +6,7 @@ export const ProtectedRoute = ({ component: Component, ...rest }) => {
     return (
         <Route{...rest}
             render={(props) => {
-                if (localStorage.getItem('perfumeUserId')!=='null') {
+                if (localStorage.getItem('MFUserId')!=='null') {
                     return <Component{...props} />
                 }
                 else {

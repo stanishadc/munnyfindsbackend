@@ -1,13 +1,14 @@
 import React from 'react'
-import { Link } from 'react-router-dom';
+import { Link,useHistory } from 'react-router-dom';
+import auth from './Auth'
 export default function Sidebar(props) {
+    const history = useHistory();
     return (
         <div className="inner-sidebar mr-3">
             {/*Image Avatar*/}
             <div className="avatar text-center">
                 <br />
                 <p><strong>Welcome Admin</strong></p>
-                <span className="text-primary small"><strong>Last Login : </strong></span>
             </div>
             {/*Image Avatar*/}
             {/*Sidebar Navigation Menu*/}
@@ -19,53 +20,53 @@ export default function Sidebar(props) {
                         </Link>
                     </li>
                     <li className="parent">
-                        <Link to={"/orders/orderslist"}><i className="fa fa-dashboard mr-3"> </i>
-                            <span className="none">Orders<i className="fa fa-angle-down pull-right align-bottom" /></span>
+                        <Link to={"/appointmentslist"}><i className="fa fa-calendar mr-3"> </i>
+                            <span className="none">Appointments<i className="fa fa-angle-down pull-right align-bottom" /></span>
                         </Link>
                     </li>
                     <li className="parent">
-                        <Link to={"/perfumeslist"}><i className="fa fa-dashboard mr-3"> </i>
-                            <span className="none">Products<i className="fa fa-angle-down pull-right align-bottom" /></span>
-                        </Link>
-                    </li>
-                    <li className="parent">
-                        <Link to={"/payments/paymentslist"}><i className="fa fa-dashboard mr-3"> </i>
-                            <span className="none">Payments<i className="fa fa-angle-down pull-right align-bottom" /></span>
-                        </Link>
-                    </li>
-                    <li className="parent">
-                        <Link to={"/customers/customerslist"}><i className="fa fa-dashboard mr-3"> </i>
+                        <Link to={"/customerslist"}><i className="fa fa-user mr-3"> </i>
                             <span className="none">Customers<i className="fa fa-angle-down pull-right align-bottom" /></span>
                         </Link>
                     </li>
                     <li className="parent">
-                        <Link to={"/category/categorylist"}><i className="fa fa-dashboard mr-3"> </i>
+                        <Link to={"/salonslist"}><i className="fa fa-scissors mr-3"> </i>
+                            <span className="none">Salons<i className="fa fa-angle-down pull-right align-bottom" /></span>
+                        </Link>
+                    </li>
+                    <li className="parent">
+                        <Link to={"/treatmentslist"}><i className="fa fa-list mr-3"> </i>
+                            <span className="none">Treatments<i className="fa fa-angle-down pull-right align-bottom" /></span>
+                        </Link>
+                    </li>
+                    <li className="parent">
+                        <Link to={"/serviceslist"}><i className="fa fa-list mr-3"> </i>
+                            <span className="none">Services<i className="fa fa-angle-down pull-right align-bottom" /></span>
+                        </Link>
+                    </li>
+                    <li className="parent">
+                        <Link to={"/categorylist"}><i className="fa fa-list mr-3"> </i>
                             <span className="none">Categories<i className="fa fa-angle-down pull-right align-bottom" /></span>
                         </Link>
-                    </li>
+                    </li>                    
                     <li className="parent">
-                        <Link to={"/collection/collectionlist"}><i className="fa fa-dashboard mr-3"> </i>
-                            <span className="none">Collections<i className="fa fa-angle-down pull-right align-bottom" /></span>
+                        <Link to={"/userslist"}><i className="fa fa-users mr-3"> </i>
+                            <span className="none">Users<i className="fa fa-angle-down pull-right align-bottom" /></span>
                         </Link>
                     </li>
                     <li className="parent">
-                        <Link to={"/brand/brandslist"}><i className="fa fa-dashboard mr-3"> </i>
-                            <span className="none">Brands<i className="fa fa-angle-down pull-right align-bottom" /></span>
-                        </Link>
-                    </li>
-                    <li className="parent">
-                        <Link to={"/products/bottlesize"}><i className="fa fa-dashboard mr-3"> </i>
-                            <span className="none">Bottle Size<i className="fa fa-angle-down pull-right align-bottom" /></span>
-                        </Link>
-                    </li>
-                    <li className="parent">
-                        <Link to={"/homeslider"}><i className="fa fa-dashboard mr-3"> </i>
+                        <Link to={"/homeslider"}><i className="fa fa-home mr-3"> </i>
                             <span className="none">Home Slider<i className="fa fa-angle-down pull-right align-bottom" /></span>
                         </Link>
                     </li>
                     <li className="parent">
-                        <Link to={"/subscribers"}><i className="fa fa-dashboard mr-3"> </i>
+                        <Link to={"/subscribers"}><i className="fa fa-envelope mr-3"> </i>
                             <span className="none">Subscribers<i className="fa fa-angle-down pull-right align-bottom" /></span>
+                        </Link>
+                    </li>
+                    <li className="parent">
+                    <Link to={props.myroute} onClick={() => {auth.logout(() => {history.push("/")})}}><i className="fa fa-sign-out mr-3"> </i>
+                            <span className="none">Logout<i className="fa fa-angle-down pull-right align-bottom" /></span>
                         </Link>
                     </li>
                 </ul>

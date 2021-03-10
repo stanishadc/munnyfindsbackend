@@ -37,11 +37,7 @@ export default class Header extends Component {
                         <div className="col-sm-8 col-4 text-right flex-header-menu justify-content-end">
 
                             <div className="mr-4">
-                                <button onClick={() => {
-                                    auth.logout(() => {
-                                        history.push("/")
-                                    })
-                                }}>Logout</button>
+                                
                             </div>
                         </div>
                         {/*Search box and avatar*/}
