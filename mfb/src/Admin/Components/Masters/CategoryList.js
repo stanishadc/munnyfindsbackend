@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios'
-import { handleSuccess, handleError } from '../CustomAlerts'
-import Header from '../Header';
-import Sidebar from '../Sidebar';
-import Footer from '../Footer';
+import { handleSuccess, handleError } from '../../CustomAlerts'
+import Header from '../../Header';
+import Sidebar from '../../Sidebar';
+import Footer from '../../Footer';
 const initialFieldValues = {
     categoryId: 0,
     categoryName: '',
-    status: "0",
+    status: "true",
     createdDate: new Date().toLocaleString(),
     updatedDate: new Date().toLocaleString(),
-    userId: 1,
+    businessTypeId: 1,
     categoryurl: ''
 }
 export default function CategoryList(props) {
@@ -46,7 +46,7 @@ export default function CategoryList(props) {
             formData.append('categoryName', values.categoryName)
             formData.append('createdDate', values.createdDate)
             formData.append('updatedDate', values.updatedDate)
-            formData.append('userId', parseInt(localStorage.getItem("MFUserId")))
+            formData.append('businessTypeId', values.businessTypeId)
             formData.append('status', values.status)
             formData.append('categoryurl', values.categoryurl)
             console.log(values)

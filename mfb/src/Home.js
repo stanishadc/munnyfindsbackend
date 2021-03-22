@@ -9,6 +9,7 @@ const initialFieldValues = {
 export default function Home(props) {
   const [values, setValues] = useState(initialFieldValues)
   const [errors, setErrors] = useState({})
+  const [isBLoading,setIsBLoading]=useState(false)
   const handleInputChange = e => {
     const { name, value } = e.target;
     setValues({
@@ -16,8 +17,7 @@ export default function Home(props) {
       [name]: value
     })
   }
-  const validate = () => {
-    console.log("error");
+  const validate = () => {    
     let temp = {}
     temp.username = values.username === "" ? false : true;
     temp.password = values.password === "" ? false : true;
@@ -26,11 +26,15 @@ export default function Home(props) {
   }
   const handleSubmit = e => {
     e.preventDefault();
+    setIsBLoading(true)
     if (validate()) {
       const formData = new FormData()
       formData.append('username', values.username)
       formData.append('password', values.password)
       addOrEdit(formData)
+    }
+    else{
+      setIsBLoading(false)
     }
   }
   const applicationAPI = (url = 'https://munnyfindsapi.azurewebsites.net/api/user/') => {
@@ -41,8 +45,8 @@ export default function Home(props) {
   const addOrEdit = (formData) => {
     applicationAPI().CheckAdminLogin(formData)
       .then(res => {
-        console.log(res);
-        if (res.data.status === "Success") {
+        setIsBLoading(false)
+        if (res.data.status === "Success") {          
           handleSuccess("Login Success");
           auth.login(() => {
             localStorage.setItem('MFUserId', res.data.data);
@@ -85,7 +89,7 @@ export default function Home(props) {
                   <input type="password" className={"form-control mt-0" + applyErrorClass('password')} name="password" placeholder="Password" value={values.password} onChange={handleInputChange} />
                 </div>
                 <div className="form-group">
-                  <button className="btn btn-theme btn-block p-2 mb-1" type="submit">Login</button>
+                  <button className="btn btn-theme btn-block p-2 mb-1" type="submit">{isBLoading?"Signing...":"Login"}</button>
                 </div>
               </form>
             </div>

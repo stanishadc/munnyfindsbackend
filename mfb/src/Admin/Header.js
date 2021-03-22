@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom';
-import auth from './Auth'
+
 import { createHashHistory } from 'history'
 export const history = createHashHistory()
 export default class Header extends Component {

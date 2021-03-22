@@ -40,11 +40,6 @@ export default function Sidebar(props) {
                         </Link>
                     </li>
                     <li className="parent">
-                        <Link to={"/serviceslist"}><i className="fa fa-list mr-3"> </i>
-                            <span className="none">Services<i className="fa fa-angle-down pull-right align-bottom" /></span>
-                        </Link>
-                    </li>
-                    <li className="parent">
                         <Link to={"/categorylist"}><i className="fa fa-list mr-3"> </i>
                             <span className="none">Categories<i className="fa fa-angle-down pull-right align-bottom" /></span>
                         </Link>
@@ -55,12 +50,12 @@ export default function Sidebar(props) {
                         </Link>
                     </li>
                     <li className="parent">
-                        <Link to={"/homeslider"}><i className="fa fa-home mr-3"> </i>
+                        <Link to={"/dashboard"}><i className="fa fa-home mr-3"> </i>
                             <span className="none">Home Slider<i className="fa fa-angle-down pull-right align-bottom" /></span>
                         </Link>
                     </li>
                     <li className="parent">
-                        <Link to={"/subscribers"}><i className="fa fa-envelope mr-3"> </i>
+                        <Link to={"/subscriberslist"}><i className="fa fa-envelope mr-3"> </i>
                             <span className="none">Subscribers<i className="fa fa-angle-down pull-right align-bottom" /></span>
                         </Link>
                     </li>

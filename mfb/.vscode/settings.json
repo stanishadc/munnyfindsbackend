@@ -1,0 +1,4 @@
+{
+    "appService.defaultWebAppToDeploy": "/subscriptions/f6d6f1d7-4aa0-47ac-8727-546d33ae8c2e/resourceGroups/munnyfinds/providers/Microsoft.Web/sites/munnyfindsb",
+    "appService.deploySubpath": "build"
+}
