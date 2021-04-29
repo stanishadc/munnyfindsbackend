@@ -5,40 +5,99 @@ import Header from '../Header';
 import Sidebar from '../Sidebar';
 import Footer from '../Footer';
 const initialFieldValues = {
-    categoryId: 0,
-    categoryName: '',
-    status: "true",
+    subscribeId: 0,
+    subscribeEmail: "",
+    status: true,
     createdDate: new Date().toLocaleString(),
-    updatedDate: new Date().toLocaleString(),
-    userId: 1,
-    categoryurl: ''
+    updatedDate: new Date().toLocaleString()
 }
 export default function SubscribersList(props) {
-    const [customersList, setCustomersList] = useState([])
-    
-    const applicationAPI = (url = 'https://munnyfindsapi.azurewebsites.net/api/subscribers/') => {
+    const [SubscribeList, setSubscribeList] = useState([])
+    const [values, setValues] = useState(initialFieldValues);
+    const [recordForEdit, setRecordForEdit] = useState(null);
+    const [errors, setErrors] = useState({});
+
+    useEffect(() => {
+        if (recordForEdit !== null) setValues(recordForEdit);
+    }, [recordForEdit]);
+
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setValues({
+            ...values,
+            [name]: value,
+        });
+    };
+
+    const validate = () => {
+        let temp = {};
+        temp.subscribeEmail = values.subscribeEmail === "" ? false : true;
+        temp.status = values.status === "0" ? false : true;
+        setErrors(temp);
+        return Object.values(temp).every((x) => x === true);
+    };
+
+    const showEditDetails = (data) => {
+        setRecordForEdit(data);
+    };
+
+    const resetForm = () => {
+        setValues(initialFieldValues);
+    };
+
+    const applicationAPI = (url = 'https://localhost:44313/api/subscribe/') => {
         return {
             fetchAll: () => axios.get(url + 'get'),
+            update: (id, updateRecord) =>
+                axios.put(url + "update/" + id, updateRecord),
             delete: id => axios.delete(url + "delete/" + id)
         }
     }
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        if (validate()) {
+            const formData = new FormData();
+            formData.append("subscribeId", values.subscribeId);
+            formData.append("subscribeEmail", values.subscribeEmail);
+            formData.append("createdDate", values.createdDate);
+            formData.append("updatedDate", values.updatedDate);
+            formData.append("status", values.status);
+            console.log(values);
+            addOrEdit(formData, resetForm);
+        }
+    };
+
+    const addOrEdit = (formData, onSuccess) => {
+        applicationAPI().update(formData.get("subscribeId"), formData)
+            .then((res) => {
+                alert(" Updated");
+                resetForm();
+                refreshSubscribeList();
+            });
+    };
+
     const onDelete = (e, id) => {
         if (window.confirm('Are you sure to delete this record?'))
             applicationAPI().delete(id)
                 .then(res => {
-                    handleSuccess("Customer Deleted Succesfully");
-                    refreshCustomersList()
+                    handleSuccess("Subescriber Deleted Succesfully");
+                    refreshSubscribeList()
                 })
-                .catch(err => handleError("Customer Deleted Failed"))
+                .catch(err => handleError("Subescriber Deleted Failed"))
     }
-    function refreshCustomersList() {
+
+    function refreshSubscribeList() {
         applicationAPI().fetchAll()
-            .then(res => setCustomersList(res.data))
+            .then(res => setSubscribeList(res.data))
             .catch(err => console.log(err))
     }
+
     useEffect(() => {
-        refreshCustomersList();
+        refreshSubscribeList();
     }, [])
+    const applyErrorClass = (field) =>
+        field in errors && errors[field] === false ? " form-control-danger" : "";
     return (
         <div className="container-fluid">
             <Header />
@@ -47,17 +106,59 @@ export default function SubscribersList(props) {
                     <Sidebar />
                 </div>
                 <div className="col-sm-9 col-xs-12 content pt-3 pl-0">
-                <span className="text-secondary">Dashboard <i className="fa fa-angle-right" /> Subscribers List</span>
-                    <div className="mt-4 mb-4 p-3 bg-white border shadow-sm lh-sm">
-                    <div className="product-list">
-                        <div className="row border-bottom mb-4">
-                            <div className="col-sm-8 pt-2"><h6 className="mb-4 bc-header">Subscribers listing</h6></div>
-                            <div className="col-sm-4 text-right pb-3">
-                                
+                    <form onSubmit={handleSubmit} autoComplete="off" noValidate>
+                        <span className="text-secondary">
+                            Dashboard <i className="fa fa-angle-right" /> Subscribers
+                         </span>
+                        <div className="row mt-3">
+                            <div className="col-sm-12">
+                                <div className="mt-4 mb-3 p-3 button-container bg-white border shadow-sm">
+                                    <h6 className="mb-3">Subscribers Details</h6>
+                                    <div className="form-group row floating-label">
+                                        <div className="col-sm-4 col-12">
+                                            <input
+                                                className={"form-control" + applyErrorClass("subscribeEmail")}
+                                                name="subscribeEmail"
+                                                type="text"
+                                                value={values.subscribeEmail}
+                                                onChange={handleInputChange}
+                                            />
+                                            <label htmlFor="subscribeEmail">Email</label>
+                                        </div>
+                                        <div className="col-sm-4">
+                                            <select
+                                                value={values.status}
+                                                onChange={handleInputChange}
+                                                className="form-control"
+                                                name="status"
+                                            >
+                                                <option value="true">active</option>
+                                                <option value="false">inactive</option>
+                                            </select>
+                                            <label htmlFor="status">Status</label>
+                                        </div>
+                                        <div className="col-sm-4">
+                                            <button type="submit" className="btn btn-primary mr-3">
+                                                Submit
+                                            </button>
+                                            <button
+                                                type="button"
+                                                className="btn btn-danger"
+                                                onClick={resetForm}
+                                            >
+                                                Cancel
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
+                    </form>
                     <div className="table-responsive product-list">
-                        <table className="table table-bordered table-striped mt-3" id="categoryList">
+                        <table
+                            className="table table-bordered table-striped mt-3"
+                            id="businessTypeList"
+                        >
                             <thead>
                                 <tr>
                                     <th>Email</th>
@@ -66,19 +167,34 @@ export default function SubscribersList(props) {
                                 </tr>
                             </thead>
                             <tbody>
-                                {customersList.map(customer =>
-                                    <tr key={customer.customerId}>
-                                        <td>{customer.email}</td>
-                                        <td>{customer.status ? "active" : "inactive"}</td>
+                                {SubscribeList.map(sub =>
+                                    <tr key={sub.subscribeId}>
+                                        <td>{sub.subscribeEmail}</td>
+                                        <td>{sub.status ? "active" : "inactive"}</td>
                                         <td>
-                                            <button className="btn btn-success mr-2"><i className="fa fa-pencil" /></button>
-                                            <button className="btn btn-danger"><i className="fas fa-trash" /></button></td>
+                                            <button
+                                                className="btn btn-success mr-2"
+                                                onClick={() => {
+                                                    showEditDetails(sub);
+                                                }}
+                                            >
+                                                <i className="fa fa-pencil" />
+                                            </button>
+                                            <button
+                                                className="btn btn-danger"
+                                                onClick={(e) =>
+                                                    onDelete(e, parseInt(sub.subscribeId))
+                                                }
+                                            >
+                                                <i className="fas fa-trash" />
+                                            </button>
+                                        </td>
                                     </tr>
                                 )}
                             </tbody>
                         </table>
                     </div>
-                </div></div></div>
+                </div>
             </div>
             <Footer></Footer>
         </div>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios'
 import { handleSuccess, handleError } from '../../CustomAlerts'
 import Header from '../../Header';
@@ -8,7 +8,8 @@ import { Link } from 'react-router-dom';
 const initialFieldValues = {
     businessId: 0,
     businessName: '',
-    businessTypeId:0,
+    businessTypeId: '',
+    business: '',
     contactName: '',
     landline: '',
     mobileNo: '',
@@ -26,9 +27,13 @@ const initialFieldValues = {
     status: "true",
     createdDate: new Date().toLocaleString(),
     updatedDate: new Date().toLocaleString(),
-    businessurl: ''
+    businessurl: '',
+    password: '',
+    about: '',
+    currency: '',
 }
 export default function AddBusiness(props) {
+    const [businessTypeList, setBusinessTypeList] = useState([])
     const [values, setValues] = useState(initialFieldValues)
     const [errors, setErrors] = useState({})
 
@@ -41,11 +46,12 @@ export default function AddBusiness(props) {
     }
     const validate = () => {
         let temp = {}
-        temp.salonName = values.salonName === "" ? false : true;
-        temp.name = values.name === "" ? false : true;
+        temp.businessName = values.businessName === "" ? false : true;
+        temp.contactName = values.contactName === "" ? false : true;
         temp.email = values.email === "" ? false : true;
         temp.mobileNo = values.mobileNo === "" ? false : true;
         temp.status = values.status === "0" ? false : true;
+        temp.businessTypeId = values.businessTypeId === "0" ? false : true;
         setErrors(temp)
         return Object.values(temp).every(x => x === true)
     }
@@ -56,6 +62,7 @@ export default function AddBusiness(props) {
             formData.append('businessId', values.businessId)
             formData.append('businessName', values.businessName)
             formData.append('businessTypeId', values.businessTypeId)
+            formData.append('business', values.business)
             formData.append('businessurl', values.businessurl)
             formData.append('contactName', values.contactName)
             formData.append('landline', values.landline)
@@ -74,12 +81,17 @@ export default function AddBusiness(props) {
             formData.append('createdDate', values.createdDate)
             formData.append('updatedDate', values.updatedDate)
             formData.append('status', values.status)
+            formData.append('password', values.password)
+            formData.append('businessurl', values.businessurl)
+            formData.append('about', values.about)
+            formData.append('currency', values.currency)
             console.log(values)
             addOrEdit(formData, resetForm)
         }
     }
-    const applicationAPI = (url = 'https://munnyfindsapi.azurewebsites.net/api/business/') => {
+    const applicationAPI = (url = 'https://localhost:44313/api/business/') => {
         return {
+            fetchBusinessType: () => axios.get('https://localhost:44313/api/businesstype/get'),
             create: newRecord => axios.post(url + "insert", newRecord)
         }
     }
@@ -92,9 +104,17 @@ export default function AddBusiness(props) {
                 })
         }
     }
+    function refreshBusinessType() {
+        applicationAPI().fetchBusinessType()
+            .then(res => setBusinessTypeList(res.data))
+            .catch(err => console.log(err))
+    }
     const resetForm = () => {
         setValues(initialFieldValues)
     }
+    useEffect(() => {
+        refreshBusinessType();
+    }, [])
     const applyErrorClass = field => ((field in errors && errors[field] === false) ? ' form-control-danger' : '')
     return (
         <div className="container-fluid">
@@ -104,7 +124,7 @@ export default function AddBusiness(props) {
                     <Sidebar />
                 </div>
                 <div className="col-sm-9 col-xs-12 content pt-3 pl-0">
-                <div className="mt-4 mb-4 p-3 bg-white border shadow-sm lh-sm">
+                    <div className="mt-4 mb-4 p-3 bg-white border shadow-sm lh-sm">
                         {/*Product Listing*/}
                         <div className="product-list">
                             <div className="row border-bottom mb-4">
@@ -113,95 +133,133 @@ export default function AddBusiness(props) {
                                     <Link to={"/businesslist"} className="btn btn-round btn-theme"><i className="fa fa-list" /> Business List</Link>
                                 </div>
                             </div>
-                    <form onSubmit={handleSubmit} autoComplete="off" noValidate>
-                        <span className="text-secondary">Dashboard <i className="fa fa-angle-right" /> Salons List</span>
-                        <div className="row mt-3">
-                            <div className="col-sm-12">
-                                <div className="mt-4 mb-3 p-3 button-container bg-white border shadow-sm">
-                                    <h6 className="mb-3">Business Details</h6>
-                                    <div className="form-group row floating-label">
-                                        <div className="col-sm-4 col-12">
-                                            <input className={"form-control" + applyErrorClass('businessName')} name="businessName" type="text" value={values.businessName} onChange={handleInputChange} />
-                                            <label htmlFor="businessName">Business Name</label>
-                                        </div>
-                                        <div className="col-sm-4 col-12">
-                                            <input className={"form-control" + applyErrorClass('contactName')} name="contactName" type="text" value={values.contactName} onChange={handleInputChange} />
-                                            <label htmlFor="contactName">Contact Name</label>
-                                        </div>
-                                        <div className="col-sm-4 col-12">
-                                            <input className={"form-control" + applyErrorClass('email')} name="email" type="text" value={values.email} onChange={handleInputChange} />
-                                            <label htmlFor="email">Email</label>
-                                        </div>
-                                    </div>
-                                    <div className="form-group row floating-label">
-                                        <div className="col-sm-4 col-12">
-                                            <input className={"form-control" + applyErrorClass('landline')} name="landline" type="text" value={values.landline} onChange={handleInputChange} />
-                                            <label htmlFor="landline">Landline</label>
-                                        </div>
-                                        <div className="col-sm-4 col-12">
-                                            <input className={"form-control" + applyErrorClass('mobileNo')} name="mobileNo" type="text" value={values.mobileNo} onChange={handleInputChange} />
-                                            <label htmlFor="mobileNo">Mobile</label>
-                                        </div>
-                                        <div className="col-sm-4 col-12">
-                                            <input className={"form-control" + applyErrorClass('location')} name="location" type="text" value={values.location} onChange={handleInputChange} />
-                                            <label htmlFor="location">Location/Area Name</label>
-                                        </div>
-                                    </div>
-                                    <div className="form-group row floating-label">
-                                        <div className="col-sm-4 col-12">
-                                            <input className={"form-control" + applyErrorClass('city')} name="city" type="text" value={values.city} onChange={handleInputChange} />
-                                            <label htmlFor="city">City</label>
-                                        </div>
-                                        <div className="col-sm-4 col-12">
-                                            <input className={"form-control" + applyErrorClass('country')} name="country" type="text" value={values.country} onChange={handleInputChange} />
-                                            <label htmlFor="country">Country</label>
-                                        </div>
-                                        <div className="col-sm-4 col-12">
-                                            <input className={"form-control" + applyErrorClass('zipCode')} name="zipCode" type="text" value={values.zipCode} onChange={handleInputChange} />
-                                            <label htmlFor="zipCode">ZipCode</label>
-                                        </div>
-                                    </div>
-                                    <div className="form-group row floating-label">
-                                        <div className="col-sm-12 col-12">
-                                            <input className={"form-control" + applyErrorClass('address')} name="address" type="text" value={values.address} onChange={handleInputChange} />
-                                            <label htmlFor="address">Address</label>
-                                        </div>
-                                    </div>
-                                    <div className="form-group row floating-label">
-                                        <div className="col-sm-12 col-12">
-                                            <input className={"form-control" + applyErrorClass('googleMapURL')} name="googleMapURL" type="text" value={values.googleMapURL} onChange={handleInputChange} />
-                                            <label htmlFor="googleMapURL">GoogleMap Location URL</label>
-                                        </div>
-                                    </div>
-                                    <div className="form-group row floating-label">
-                                        <div className="col-sm-4 col-12">
-                                            <input className={"form-control" + applyErrorClass('latitude')} name="latitude" type="text" value={values.latitude} onChange={handleInputChange} />
-                                            <label htmlFor="latitude">Latitude</label>
-                                        </div>
-                                        <div className="col-sm-4 col-12">
-                                            <input className={"form-control" + applyErrorClass('longitude')} name="longitude" type="text" value={values.longitude} onChange={handleInputChange} />
-                                            <label htmlFor="longitude">Longitude</label>
-                                        </div>
-                                        <div className="col-sm-4">
-                                            <select value={values.status} onChange={handleInputChange} className="form-control" name="status">
-                                                <option value="true">active</option>
-                                                <option value="false">inactive</option>
-                                            </select>
-                                            <label htmlFor="status">Status</label>
-                                        </div>
-                                    </div>
-                                    <div className="form-group row floating-label">
-                                        <div className="col-sm-4">
-                                            <button type="submit" className="btn btn-primary mr-3">Submit</button>
-                                            <button type="button" className="btn btn-danger" onClick={resetForm}>Cancel</button>
+                            <form onSubmit={handleSubmit} autoComplete="off" noValidate>
+                                <span className="text-secondary"> Dashboard <i className="fa fa-angle-right" /> Business List </span>
+                                <div className="row mt-3">
+                                    <div className="col-sm-12">
+                                        <div className="mt-4 mb-3 p-3 button-container bg-white border shadow-sm">
+                                            <h6 className="mb-3">Business Details</h6>
+                                            <div className="form-group row floating-label">
+                                                <div className="col-sm-4 col-12">
+                                                    <select name="businessTypeId" type="text" value={values.businessTypeId} onChange={handleInputChange} className="form-control">
+                                                        <option value="0">Please Select</option>
+                                                        {businessTypeList.map(bus =>
+                                                            <option value={bus.businessTypeId}>{bus.business}</option>
+                                                        )}
+                                                    </select>
+                                                    <label htmlFor="business">Business Type</label>
+                                                </div>
+                                                <div className="col-sm-4 col-12">
+                                                    <input className={"form-control" + applyErrorClass('businessName')} name="businessName" type="text" value={values.businessName} onChange={handleInputChange} />
+                                                    <label htmlFor="businessName">Business Name</label>
+                                                </div>
+                                                <div className="col-sm-4 col-12">
+                                                    <input className={"form-control" + applyErrorClass('contactName')} name="contactName" type="text" value={values.contactName} onChange={handleInputChange} />
+                                                    <label htmlFor="contactName">Contact Name</label>
+                                                </div>
+                                            </div>
+                                            <div className="form-group row floating-label">
+                                                <div className="col-sm-4 col-12">
+                                                    <input className={"form-control" + applyErrorClass('email')} name="email" type="text" value={values.email} onChange={handleInputChange} />
+                                                    <label htmlFor="email">Email</label>
+                                                </div>
+                                                <div className="col-sm-4 col-12">
+                                                    <input className={"form-control" + applyErrorClass('landline')} name="landline" type="text" value={values.landline} onChange={handleInputChange} />
+                                                    <label htmlFor="landline">Landline</label>
+                                                </div>
+                                                <div className="col-sm-4 col-12">
+                                                    <input className={"form-control" + applyErrorClass('mobileNo')} name="mobileNo" type="text" value={values.mobileNo} onChange={handleInputChange} />
+                                                    <label htmlFor="mobileNo">Mobile</label>
+                                                </div>
+                                            </div>
+                                            <div className="form-group row floating-label">
+                                                <div className="col-sm-4 col-12">
+                                                    <input className={"form-control" + applyErrorClass('location')} name="location" type="text" value={values.location} onChange={handleInputChange} />
+                                                    <label htmlFor="location">Location/Area Name</label>
+                                                </div>
+                                                <div className="col-sm-4 col-12">
+                                                    <input className={"form-control" + applyErrorClass('city')} name="city" type="text" value={values.city} onChange={handleInputChange} />
+                                                    <label htmlFor="city">City</label>
+                                                </div>
+                                                <div className="col-sm-4 col-12">
+                                                    <input className={"form-control" + applyErrorClass('country')} name="country" type="text" value={values.country} onChange={handleInputChange} />
+                                                    <label htmlFor="country">Country</label>
+                                                </div>
+                                            </div>
+                                            <div className="form-group row floating-label">
+                                                <div className="col-sm-4 col-12">
+                                                    <input className={"form-control" + applyErrorClass('zipCode')} name="zipCode" type="text" value={values.zipCode} onChange={handleInputChange} />
+                                                    <label htmlFor="zipCode">ZipCode</label>
+                                                </div>
+                                                <div className="col-sm-4 col-12">
+                                                    <input className={"form-control" + applyErrorClass('latitude')} name="latitude" type="text" value={values.latitude} onChange={handleInputChange} />
+                                                    <label htmlFor="latitude">Latitude</label>
+                                                </div>
+                                                <div className="col-sm-4 col-12">
+                                                    <input className={"form-control" + applyErrorClass('longitude')} name="longitude" type="text" value={values.longitude} onChange={handleInputChange} />
+                                                    <label htmlFor="longitude">Longitude</label>
+                                                </div>
+                                            </div>
+
+                                            <div className="form-group row floating-label">
+                                                <div className="col-sm-4 col-12">
+                                                    <input className={"form-control" + applyErrorClass('password')} name="password" type="text" value={values.password} onChange={handleInputChange} />
+                                                    <label htmlFor="password">Password</label>
+                                                </div>
+                                                <div className="col-sm-4 col-12">
+                                                    <input className={"form-control" + applyErrorClass('currency')} name="currency" type="text" value={values.currency} onChange={handleInputChange} />
+                                                    <label htmlFor="currency">Currency</label>
+                                                </div>
+                                                <div className="col-sm-4 col-12" >
+                                                    <select value={values.status} onChange={handleInputChange} className="form-control" name="status">
+                                                        <option value="true">active</option>
+                                                        <option value="false">inactive</option>
+                                                    </select>
+                                                    <label htmlFor="status">Status</label>
+                                                </div>
+                                            </div>
+                                            <div className="form-group row floating-label">
+                                                <div className="col-sm-4 col-12">
+                                                    <input className={"form-control" + applyErrorClass('rating')} name="rating" type="text" value={values.rating} onChange={handleInputChange} />
+                                                    <label htmlFor="rating">Rating</label>
+                                                </div>
+                                                <div className="col-sm-4 col-12">
+                                                    <input className={"form-control" + applyErrorClass('totalRatings')} name="totalRatings" type="text" value={values.totalRatings} onChange={handleInputChange} />
+                                                    <label htmlFor="totalRatings">TotalRatings</label>
+                                                </div>
+                                            </div>
+                                            <div className="form-group row floating-label">
+                                                <div className="col-sm-12 col-12">
+                                                    <input className={"form-control" + applyErrorClass('about')} name="about" type="text" value={values.about} onChange={handleInputChange} />
+                                                    <label htmlFor="about">About</label>
+                                                </div>
+                                            </div>
+                                            <div className="form-group row floating-label">
+                                                <div className="col-sm-12 col-12">
+                                                    <input className={"form-control" + applyErrorClass('address')} name="address" type="text" value={values.address} onChange={handleInputChange} />
+                                                    <label htmlFor="address">Address</label>
+                                                </div>
+                                            </div>
+                                            <div className="form-group row floating-label">
+                                                <div className="col-sm-12 col-12">
+                                                    <input className={"form-control" + applyErrorClass('googleMapURL')} name="googleMapURL" type="text" value={values.googleMapURL} onChange={handleInputChange} />
+                                                    <label htmlFor="googleMapURL">GoogleMap Location URL</label>
+                                                </div>
+                                            </div>
+                                            <div className="form-group row floating-label">
+                                            </div>
+                                            <div className="form-group row floating-label">
+                                                <div className="col-sm-4">
+                                                    <button type="submit" className="btn btn-primary mr-3">Submit</button>
+                                                    <button type="button" className="btn btn-danger" onClick={resetForm}>Cancel</button>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </form>
                         </div>
-                    </form>
-                </div>
-            </div></div></div>
+                    </div></div></div>
             <Footer></Footer>
         </div>
     )

@@ -6,7 +6,6 @@ import Sidebar from '../Sidebar';
 import Footer from '../Footer';
 const initialFieldValues = {
     userId: 0,
-    username: '',
     password: '',
     name: '',
     email: '',
@@ -32,12 +31,12 @@ export default function UsersList(props) {
     const handleInputChange = e => {
         console.log(e.target.value)
         const { name, value } = e.target;
-        setValues({...values,[name]: value})
+        setValues({ ...values, [name]: value })
     }
     const validate = () => {
         let temp = {}
         temp.name = values.name === "" ? false : true;
-        temp.username = values.username === "" ? false : true;
+        temp.email = values.email === "" ? false : true;
         temp.password = values.password === "" ? false : true;
         temp.status = values.status === "0" ? false : true;
         setErrors(temp)
@@ -48,22 +47,22 @@ export default function UsersList(props) {
         if (validate()) {
             const formData = new FormData()
             formData.append('userId', values.userId)
-            formData.append('username', values.username)
             formData.append('password', values.password)
             formData.append('name', values.name)
             formData.append('email', values.email)
             formData.append('emailConfirmation', values.emailConfirmation)
             formData.append('phoneNumber', values.phoneNumber)
             formData.append('phoneNumberConfirmation', values.phoneNumberConfirmation)
-            formData.append('createdDate', values.createdDate)
-            formData.append('updatedDate', values.updatedDate)
+            // formData.append('createdDate', values.createdDate)
+            // formData.append('updatedDate', values.updatedDate)
             formData.append('roleId', parseInt(values.roleId))
             formData.append('status', values.status)
             console.log(values)
+            console.log(1)
             addOrEdit(formData, resetForm)
         }
     }
-    const applicationAPI = (url = 'https://munnyfindsapi.azurewebsites.net/api/user/') => {
+    const applicationAPI = (url = 'https://localhost:44313/api/user/') => {
         return {
             fetchAll: () => axios.get(url + 'get'),
             create: newRecord => axios.post(url + "insert", newRecord),
@@ -72,7 +71,7 @@ export default function UsersList(props) {
         }
     }
     const addOrEdit = (formData, onSuccess) => {
-        if (formData.get('userId') === 0) {
+        if (formData.get('userId') === "0") {
             applicationAPI().create(formData)
                 .then(res => {
                     handleSuccess("New User Added");
@@ -140,12 +139,8 @@ export default function UsersList(props) {
                                             <input className={"form-control" + applyErrorClass('phoneNumber')} name="phoneNumber" type="text" value={values.phoneNumber} onChange={handleInputChange} />
                                             <label htmlFor="phoneNumber">Phone Number</label>
                                         </div>
-                                        </div>
-                                        <div className="form-group row floating-label">
-                                        <div className="col-sm-4 col-12">
-                                            <input className={"form-control" + applyErrorClass('username')} name="username" type="text" value={values.username} onChange={handleInputChange} />
-                                            <label htmlFor="username">UserName</label>
-                                        </div>
+                                    </div>
+                                    <div className="form-group row floating-label">
                                         <div className="col-sm-4 col-12">
                                             <input className={"form-control" + applyErrorClass('password')} name="password" type="password" value={values.password} onChange={handleInputChange} />
                                             <label htmlFor="password">Password</label>
@@ -157,8 +152,8 @@ export default function UsersList(props) {
                                             </select>
                                             <label htmlFor="status">Status</label>
                                         </div>
-                                        </div>
-                                        <div className="form-group row floating-label">
+                                    </div>
+                                    <div className="form-group row floating-label">
                                         <div className="col-sm-4">
                                             <button type="submit" className="btn btn-primary mr-3">Submit</button>
                                             <button type="button" className="btn btn-danger" onClick={resetForm}>Cancel</button>
@@ -176,7 +171,6 @@ export default function UsersList(props) {
                                     <th>Name</th>
                                     <th>Email</th>
                                     <th>Phone</th>
-                                    <th>Username</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
@@ -187,7 +181,6 @@ export default function UsersList(props) {
                                         <td>{user.name}</td>
                                         <td>{user.email}</td>
                                         <td>{user.phoneNumber}</td>
-                                        <td>{user.username}</td>
                                         <td>{user.status ? "active" : "inactive"}</td>
                                         <td>
                                             <button className="btn btn-success mr-2" onClick={() => { showEditDetails(user) }}><i className="fa fa-pencil" /></button>

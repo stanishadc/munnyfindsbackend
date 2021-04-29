@@ -3,7 +3,7 @@ import auth from './Admin/Auth'
 import { handleSuccess, handleError } from './Admin/CustomAlerts'
 import axios from 'axios'
 const initialFieldValues = {
-  username: '',
+  email: '',
   password: '',
 }
 export default function Home(props) {
@@ -19,7 +19,7 @@ export default function Home(props) {
   }
   const validate = () => {    
     let temp = {}
-    temp.username = values.username === "" ? false : true;
+    temp.email = values.email === "" ? false : true;
     temp.password = values.password === "" ? false : true;
     setErrors(temp)
     return Object.values(temp).every(x => x === true)
@@ -29,7 +29,7 @@ export default function Home(props) {
     setIsBLoading(true)
     if (validate()) {
       const formData = new FormData()
-      formData.append('username', values.username)
+      formData.append('email', values.email)
       formData.append('password', values.password)
       addOrEdit(formData)
     }
@@ -37,7 +37,7 @@ export default function Home(props) {
       setIsBLoading(false)
     }
   }
-  const applicationAPI = (url = 'https://munnyfindsapi.azurewebsites.net/api/user/') => {
+  const applicationAPI = (url = 'https://localhost:44313/api/user/') => {
     return {
       CheckAdminLogin: newRecord => axios.post(url + "adminlogin", newRecord)
     }
@@ -80,7 +80,7 @@ export default function Home(props) {
                   <div className="input-group-prepend">
                     <span className="input-group-text" id="basic-addon1"><i className="fa fa-user" /></span>
                   </div>
-                  <input type="text" className={"form-control mt-0" + applyErrorClass('username')} name="username" placeholder="UserName" value={values.username} onChange={handleInputChange} />
+                  <input type="text" className={"form-control mt-0" + applyErrorClass('email')} name="email" placeholder="email" value={values.email} onChange={handleInputChange} />
                 </div>
                 <div className="input-group mb-3">
                   <div className="input-group-prepend">

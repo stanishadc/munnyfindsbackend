@@ -6,6 +6,7 @@ import CategoryList from './Admin/Components/Masters/CategoryList'
 import SubscribersList from './Admin/Components/SubscribersList'
 import Dashboard from './Admin/Components/Dashboard'
 import AppointmentsList from './Admin/Components/AppointmentsList'
+import AppointmentsView from './Admin/Components/AppointmentsView'
 import AddSalon from './Admin/Components/Business/AddBusiness'
 import BusinessDetails from './Admin/Components/Business/BusinessDetails';
 import SalonsList from './Admin/Components/Business/BusinessList'
@@ -25,6 +26,7 @@ function App() {
         <ProtectedRoute path='/categorylist' component={CategoryList} />
         <ProtectedRoute path='/dashboard' component={Dashboard} />
         <ProtectedRoute path='/appointmentslist' component={AppointmentsList} />
+        <ProtectedRoute path='/appointment/:appointmentId' component={AppointmentsView} />
         <ProtectedRoute path='/businesslist' component={SalonsList} />
         <ProtectedRoute path='/addsalon' component={AddSalon} />
         <ProtectedRoute path='/businessdetails/:businessId' component={BusinessDetails} />

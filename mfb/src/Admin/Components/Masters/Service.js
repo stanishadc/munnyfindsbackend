@@ -5,25 +5,32 @@ import Header from "../../Header";
 import Sidebar from "../../Sidebar";
 import Footer from "../../Footer";
 const initialFieldValues = {
-  categoryId: 0,
+  serviceId: 0,
+  serviceName: "",
+  description: "",
+  businessId: "",
+  businessTypeId: 0,
+  business: "",
+  businessName: "",
+  categoryId: "",
   categoryName: "",
   status: "true",
   createdDate: new Date().toLocaleString(),
   updatedDate: new Date().toLocaleString(),
-  businessTypeId: 0,
-  business: "",
-  categoryurl: "",
 };
-export default function CategoryList(props) {
-  const [categoryList, setCategoryList] = useState([]);
-  const [businessType, setBusinessType] = useState([]);
-  const [recordForEdit, setRecordForEdit] = useState(null);
+export default function ServiceList(props) {
   const [values, setValues] = useState(initialFieldValues);
+  const [serviceList, setServiceList] = useState([]);
+  const [businessType, setBusinessType] = useState([]);
+  const [businessList, setBusinessList] = useState([]);
+  const [categoryList, setCategoryList] = useState([]);
+  const [recordForEdit, setRecordForEdit] = useState(null);
   const [errors, setErrors] = useState({});
 
   useEffect(() => {
     if (recordForEdit !== null) setValues(recordForEdit);
   }, [recordForEdit]);
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setValues({
@@ -31,9 +38,31 @@ export default function CategoryList(props) {
       [name]: value,
     });
   };
+  const handleTypeChange = (e) => {
+    const { name, value } = e.target;
+    setValues({
+      ...values,
+      [name]: value,
+    });
+    console.log(e.target.value);
+    GetBusiness(e.target.value);
+    GetCategory(e.target.value);
+  };
+  function GetBusiness(id) {
+    applicationAPI()
+      .fetchBusiness(id)
+      .then((res) => setBusinessList(res.data))
+      .catch((err) => console.log(err));
+  }
+  function GetCategory(id) {
+    applicationAPI()
+      .fetchCategory(id)
+      .then((res) => setCategoryList(res.data))
+      .catch((err) => console.log(err));
+  }
   const validate = () => {
     let temp = {};
-    temp.categoryName = values.categoryName === "" ? false : true;
+    temp.serviceName = values.serviceName === "" ? false : true;
     temp.status = values.status === "0" ? false : true;
     setErrors(temp);
     return Object.values(temp).every((x) => x === true);
@@ -42,23 +71,32 @@ export default function CategoryList(props) {
     e.preventDefault();
     if (validate()) {
       const formData = new FormData();
+      formData.append("serviceId", values.serviceId);
+      formData.append("serviceName", values.serviceName);
+      formData.append("description", values.description);
+      formData.append("businessTypeId", values.businessTypeId);
+      formData.append("business", values.business);
+      formData.append("businessId", values.businessId);
+      formData.append("businessName", values.businessName);
       formData.append("categoryId", values.categoryId);
       formData.append("categoryName", values.categoryName);
       formData.append("createdDate", values.createdDate);
       formData.append("updatedDate", values.updatedDate);
-      formData.append("businessTypeId", values.businessTypeId);
-      formData.append("business", values.business);
       formData.append("status", values.status);
-      formData.append("categoryurl", values.categoryurl);
       console.log(values);
+      console.log(1);
       addOrEdit(formData, resetForm);
     }
   };
-  const applicationAPI = (url = "https://localhost:44313/api/category/") => {
-    console.log(1);
+  const applicationAPI = (url = "https://localhost:44313/api/service/") => {
+    console.log();
     return {
       fetchBusinessType: (id) =>
         axios.get("https://localhost:44313/api/businesstype/Get/"),
+      fetchBusiness: (id) =>
+        axios.get("https://localhost:44313/api/business/GetByType/" + id),
+      fetchCategory: (id) =>
+        axios.get("https://localhost:44313/api/category/GetByType/" + id),
       fetchAll: () => axios.get(url + "get"),
       create: (newRecord) => axios.post(url + "insert", newRecord),
       update: (id, updateRecord) =>
@@ -67,26 +105,28 @@ export default function CategoryList(props) {
     };
   };
   const addOrEdit = (formData, onSuccess) => {
-    if (formData.get("categoryId") === "0") {
+    if (formData.get("serviceId") === "0") {
       applicationAPI()
         .create(formData)
         .then((res) => {
-          console.log(res);
-          handleSuccess("New Category Added");
+          handleSuccess("New Service Added");
           resetForm();
-          refreshCategoryList();
+          refreshServiceList();
         });
     } else {
       applicationAPI()
-        .update(formData.get("categoryId"), formData)
+        .update(formData.get("serviceId"), formData)
         .then((res) => {
-          handleSuccess("Category Details Updated");
+          handleSuccess("Service Details Updated");
           resetForm();
-          refreshCategoryList();
+          refreshServiceList();
         });
     }
   };
   const showEditDetails = (data) => {
+    refreshBusinessType();
+    GetBusiness(data.businessTypeId)
+    GetCategory(data.businessTypeId)
     setRecordForEdit(data);
   };
   const onDelete = (e, id) => {
@@ -94,18 +134,18 @@ export default function CategoryList(props) {
       applicationAPI()
         .delete(id)
         .then((res) => {
-          handleSuccess("Category Deleted Succesfully");
-          refreshCategoryList();
+          handleSuccess("Service Deleted Succesfully");
+          refreshServiceList();
         })
-        .catch((err) => handleError("Category Deleted Failed"));
+        .catch((err) => handleError("Service Deleted Failed"));
   };
   const resetForm = () => {
     setValues(initialFieldValues);
   };
-  function refreshCategoryList() {
+  function refreshServiceList() {
     applicationAPI()
       .fetchAll()
-      .then((res) => setCategoryList(res.data))
+      .then((res) => setServiceList(res.data))
       .catch((err) => console.log(err));
   }
   function refreshBusinessType() {
@@ -115,7 +155,7 @@ export default function CategoryList(props) {
       .catch((err) => console.log(err));
   }
   useEffect(() => {
-    refreshCategoryList();
+    refreshServiceList();
     refreshBusinessType();
   }, []);
   const applyErrorClass = (field) =>
@@ -130,19 +170,19 @@ export default function CategoryList(props) {
         <div className="col-sm-9 col-xs-12 content pt-3 pl-0">
           <form onSubmit={handleSubmit} autoComplete="off" noValidate>
             <span className="text-secondary">
-              Dashboard <i className="fa fa-angle-right" /> Category List
+              Dashboard <i className="fa fa-angle-right" /> Service
             </span>
             <div className="row mt-3">
               <div className="col-sm-12">
                 <div className="mt-4 mb-3 p-3 button-container bg-white border shadow-sm">
-                  <h6 className="mb-3">Category Details</h6>
+                  <h6 className="mb-3">Service Details</h6>
                   <div className="form-group row floating-label">
                     <div className="col-sm-4 col-12">
                       <select
                         name="businessTypeId"
                         type="text"
                         value={values.businessTypeId}
-                        onChange={handleInputChange}
+                        onChange={handleTypeChange}
                         className="form-control"
                       >
                         <option value="0">Please Select</option>
@@ -152,22 +192,58 @@ export default function CategoryList(props) {
                           </option>
                         ))}
                       </select>
-                      <label htmlFor="business">BusinessType</label>
+                      <label htmlFor="business">Business Type</label>
                     </div>
-
+                    <div className="col-sm-4 col-12">
+                      <select
+                        name="businessId"
+                        type="text"
+                        value={values.businessId}
+                        onChange={handleInputChange}
+                        className="form-control"
+                      >
+                        <option value="0">Please Select</option>
+                        {businessList.map((bus) => (
+                          <option value={bus.businessId}>
+                            {bus.businessName}
+                          </option>
+                        ))}
+                      </select>
+                      <label htmlFor="businessName">Business</label>
+                    </div>
+                    <div className="col-sm-4 col-12">
+                      <select
+                        name="categoryId"
+                        type="text"
+                        value={values.categoryId}
+                        onChange={handleInputChange}
+                        className="form-control"
+                      >
+                        <option value="0">Please Select</option>
+                        {categoryList.map((bus) => (
+                          <option value={bus.categoryId}>
+                            {bus.categoryName}
+                          </option>
+                        ))}
+                      </select>
+                      <label htmlFor="categoryName">Category</label>
+                    </div>
+                  </div>
+                  <div className="form-group row floating-label">
                     <div className="col-sm-4 col-12">
                       <input
                         className={
-                          "form-control" + applyErrorClass("categoryName")
+                          "form-control" + applyErrorClass("serviceName")
                         }
-                        name="categoryName"
+                        name="serviceName"
                         type="text"
-                        value={values.categoryName}
+                        value={values.serviceName}
                         onChange={handleInputChange}
+                        placeholder="Service Name"
                       />
-                      <label htmlFor="categoryName">Category Name</label>
+                      <label htmlFor="serviceName">Service Name</label>
                     </div>
-                    <div className="col-sm-4">
+                    <div className="col-sm-4 col-12">
                       <select
                         value={values.status}
                         onChange={handleInputChange}
@@ -201,36 +277,36 @@ export default function CategoryList(props) {
           <div className="table-responsive product-list">
             <table
               className="table table-bordered table-striped mt-3"
-              id="categoryList"
+              id="serviceList"
             >
               <thead>
                 <tr>
-                  <th>Business Type</th>
-                  <th>Category Name</th>
+                  <th>Business</th>
+                  <th>Category</th>
+                  <th>Service</th>
                   <th>Status</th>
                   <th>Action</th>
                 </tr>
               </thead>
               <tbody>
-                {categoryList.map((category) => (
-                  <tr key={category.categoryId}>
-                    <td>{category.businessType.business}</td>
-                    <td>{category.categoryName}</td>
-                    <td>{category.status ? "active" : "inactive"}</td>
+                {serviceList.map((ser) => (
+                  <tr key={ser.serviceId}>
+                    <td>{ser.businessName}</td>
+                    <td>{ser.categoryName}</td>
+                    <td>{ser.serviceName}</td>
+                    <td>{ser.status ? "active" : "inactive"}</td>
                     <td>
                       <button
                         className="btn btn-success mr-2"
                         onClick={() => {
-                          showEditDetails(category);
+                          showEditDetails(ser);
                         }}
                       >
                         <i className="fa fa-pencil" />
                       </button>
                       <button
                         className="btn btn-danger"
-                        onClick={(e) =>
-                          onDelete(e, parseInt(category.categoryId))
-                        }
+                        onClick={(e) => onDelete(e, parseInt(ser.serviceId))}
                       >
                         <i className="fas fa-trash" />
                       </button>

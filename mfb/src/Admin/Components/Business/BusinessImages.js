@@ -77,7 +77,7 @@ export default function BusinessImages(props) {
         }
     }
 
-    const applicationAPI = (url = 'https://munnyfindsapi.azurewebsites.net/api/businessimages/') => {
+    const applicationAPI = (url = 'https://localhost:44313/api/businessimages/') => {
         return {
             fetchProductImages: () => axios.get(url + 'GetByBusiness/' + props.match.params["businessId"]),
             create: newRecord => axios.post(url + "insert", newRecord),
@@ -139,7 +139,7 @@ export default function BusinessImages(props) {
     }
     function refreshProductImages() {
         applicationAPI().fetchProductImages()
-            .then(res => 
+            .then(res =>
                 setImagesList(res.data))
             .catch(err => console.log(err))
     }
@@ -217,7 +217,8 @@ export default function BusinessImages(props) {
                                 </tbody>
                             </table>
                         </div>
-
                     </div></div></div></div>
     )
 }
+
+

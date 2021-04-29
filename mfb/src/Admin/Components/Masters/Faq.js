@@ -5,15 +5,15 @@ import Header from "../../Header";
 import Sidebar from "../../Sidebar";
 import Footer from "../../Footer";
 const initialFieldValues = {
-  businessTypeId: 0,
-  business: "",
-  status: "true",
-  createdDate: new Date().toLocaleString(),
-  updatedDate: new Date().toLocaleString(),
-  businessTypeURL: "",
+  faqId: 0,
+  subjectId: "",
+  subjetName: "",
+  question: "",
+  answer: ""
 };
-export default function BusinessTypes(props) {
-  const [businessTypeList, setBusinessTypeList] = useState([]);
+export default function Fqa(props) {
+  const [faqList, setfaqList] = useState([]);
+  const [faqType, setFaqType] = useState([]);
   const [recordForEdit, setRecordForEdit] = useState(null);
   const [values, setValues] = useState(initialFieldValues);
   const [errors, setErrors] = useState({});
@@ -21,7 +21,6 @@ export default function BusinessTypes(props) {
   useEffect(() => {
     if (recordForEdit !== null) setValues(recordForEdit);
   }, [recordForEdit]);
-
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setValues({
@@ -31,8 +30,7 @@ export default function BusinessTypes(props) {
   };
   const validate = () => {
     let temp = {};
-    temp.business = values.business === "" ? false : true;
-    temp.status = values.status === "0" ? false : true;
+    temp.question = values.question === "" ? false : true;
     setErrors(temp);
     return Object.values(temp).every((x) => x === true);
   };
@@ -40,20 +38,21 @@ export default function BusinessTypes(props) {
     e.preventDefault();
     if (validate()) {
       const formData = new FormData();
-      formData.append("businessTypeId", values.businessTypeId);
-      formData.append("business", values.business);
-      formData.append("createdDate", values.createdDate);
-      formData.append("updatedDate", values.updatedDate);
-      formData.append("status", values.status);
-      formData.append("businessTypeURL", values.businessTypeURL);
+      formData.append("faqId", values.faqId);
+      formData.append("subjectId", values.subjectId);
+      formData.append("subjetName", values.subjetName);
+      formData.append("question", values.question);
+      formData.append("answer", values.answer);
       console.log(values);
       addOrEdit(formData, resetForm);
     }
   };
   const applicationAPI = (
-    url = "https://localhost:44313/api/businesstype/"
+    url = "https://localhost:44313/api/faq/"
   ) => {
     return {
+      fetchSubjectName: (id) =>
+        axios.get("https://localhost:44313/api/subject/get/"),
       fetchAll: () => axios.get(url + "get"),
       create: (newRecord) => axios.post(url + "insert", newRecord),
       update: (id, updateRecord) =>
@@ -62,21 +61,21 @@ export default function BusinessTypes(props) {
     };
   };
   const addOrEdit = (formData, onSuccess) => {
-    if (formData.get("businessTypeId") === "0") {
+    if (formData.get("faqId") === "0") {
       applicationAPI()
         .create(formData)
         .then((res) => {
-          handleSuccess("New BusinessType Added");
+          handleSuccess("FAQ Added");
           resetForm();
-          refreshBusinessTypeList();
+          refreshFaqList();
         });
     } else {
       applicationAPI()
-        .update(formData.get("businessTypeId"), formData)
+        .update(formData.get("faqId"), formData)
         .then((res) => {
-          handleSuccess("BusinessType Details Updated");
+          handleSuccess("FAQ Updated");
           resetForm();
-          refreshBusinessTypeList();
+          refreshFaqList();
         });
     }
   };
@@ -88,22 +87,30 @@ export default function BusinessTypes(props) {
       applicationAPI()
         .delete(id)
         .then((res) => {
-          handleSuccess("Business Type Deleted Succesfully");
-          refreshBusinessTypeList();
+          handleSuccess("FAQ Deleted Succesfully");
+          refreshFaqList();
         })
-        .catch((err) => handleError("BusinessType Deleted Failed"));
+        .catch((err) => handleError("FAQ Deleted Failed"));
   };
   const resetForm = () => {
     setValues(initialFieldValues);
   };
-  function refreshBusinessTypeList() {
+  function refreshFaqList() {
     applicationAPI()
       .fetchAll()
-      .then((res) => setBusinessTypeList(res.data))
+      .then((res) => setfaqList(res.data))
+      .catch((err) => console.log(err));
+  }
+  function refreshFaqType() {
+    applicationAPI()
+      .fetchSubjectName()
+      .then((res) => setFaqType(res.data))
       .catch((err) => console.log(err));
   }
   useEffect(() => {
-    refreshBusinessTypeList();
+    refreshFaqList();
+    refreshFaqType();
+
   }, []);
   const applyErrorClass = (field) =>
     field in errors && errors[field] === false ? " form-control-danger" : "";
@@ -117,36 +124,58 @@ export default function BusinessTypes(props) {
         <div className="col-sm-9 col-xs-12 content pt-3 pl-0">
           <form onSubmit={handleSubmit} autoComplete="off" noValidate>
             <span className="text-secondary">
-              Dashboard <i className="fa fa-angle-right" /> Business Type
+              Dashboard <i className="fa fa-angle-right" /> FAQ
             </span>
             <div className="row mt-3">
               <div className="col-sm-12">
                 <div className="mt-4 mb-3 p-3 button-container bg-white border shadow-sm">
-                  <h6 className="mb-3">Business Details</h6>
+                  <h6 className="mb-3">FAQ</h6>
                   <div className="form-group row floating-label">
                     <div className="col-sm-4 col-12">
-                      <input
-                        className={"form-control" + applyErrorClass("business")}
-                        name="business"
-                        type="text"
-                        value={values.business}
-                        onChange={handleInputChange}
-                      />
-                      <label htmlFor="business">Buinsess</label>
-                    </div>
-                    <div className="col-sm-4">
                       <select
-                        value={values.status}
+                        name="subjectId"
+                        type="text"
+                        value={values.subjectId}
                         onChange={handleInputChange}
                         className="form-control"
-                        name="status"
                       >
-                        <option value="true">active</option>
-                        <option value="false">inactive</option>
+                        <option value="0">Please Select</option>
+                        {faqType.map((bus) => (
+                          <option value={bus.subjectId}>
+                            {bus.subjectName}
+                          </option>
+                        ))}
                       </select>
-                      <label htmlFor="status">Status</label>
+                      <label htmlFor="subjectName">Subject</label>
                     </div>
-                    <div className="col-sm-4">
+                  </div>
+                  <div className="form-group row floating-label">
+                    <div className="col-sm-12 col-12">
+                      <input
+                        className={"form-control" + applyErrorClass("question")}
+                        name="question"
+                        type="text"
+                        value={values.question}
+                        onChange={handleInputChange}
+                      />
+                      <label htmlFor="question">Question</label>
+                    </div>
+                  </div>
+                  <div className="form-group row floating-label">
+                    <div className="col-sm-12 col-12">
+                      <input
+                        className={"form-control" + applyErrorClass("answer")}
+                        name="answer"
+                        type="text"
+                        value={values.answer}
+                        onChange={handleInputChange}
+                      />
+                      <label htmlFor="answer">Answer</label>
+                    </div>
+                  </div>
+
+                  <div className="form-group row floating-label">
+                    <div className="col-sm-4 col-12">
                       <button type="submit" className="btn btn-primary mr-3">
                         Submit
                       </button>
@@ -166,25 +195,28 @@ export default function BusinessTypes(props) {
           <div className="table-responsive product-list">
             <table
               className="table table-bordered table-striped mt-3"
-              id="businessTypeList"
+              id="faqList"
             >
               <thead>
                 <tr>
-                  <th>Buinsess Name</th>
-                  <th>Status</th>
+                  <th>Subject</th>
+                  <th>Question</th>
+                  <th>Answer</th>
                   <th>Action</th>
                 </tr>
               </thead>
               <tbody>
-                {businessTypeList.map((bus) => (
-                  <tr key={bus.businessTypeId}>
-                    <td>{bus.business}</td>
-                    <td>{bus.status ? "active" : "inactive"}</td>
+                {faqList.map((f) => (
+                  <tr key={f.faqId}>
+                    <td>{f.subject.subjectName}</td>
+                    <td>{f.question}</td>
+                    <td>{f.answer}</td>
+
                     <td>
                       <button
                         className="btn btn-success mr-2"
                         onClick={() => {
-                          showEditDetails(bus);
+                          showEditDetails(f);
                         }}
                       >
                         <i className="fa fa-pencil" />
@@ -192,7 +224,7 @@ export default function BusinessTypes(props) {
                       <button
                         className="btn btn-danger"
                         onClick={(e) =>
-                          onDelete(e, parseInt(bus.businessTypeId))
+                          onDelete(e, parseInt(f.faqId))
                         }
                       >
                         <i className="fas fa-trash" />
