@@ -67,12 +67,7 @@ export default function Sidebar(props) {
                         <Link to={"/userslist"}><i className="fa fa-users mr-3"> </i>
                             <span className="none">Users<i className="fa fa-angle-down pull-right align-bottom" /></span>
                         </Link>
-                    </li>
-                    <li className="parent">
-                        <Link to={"/dashboard"}><i className="fa fa-home mr-3"> </i>
-                            <span className="none">Home Slider<i className="fa fa-angle-down pull-right align-bottom" /></span>
-                        </Link>
-                    </li>
+                    </li>                    
                     <li className="parent">
                         <Link to={"/subscriberslist"}><i className="fa fa-envelope mr-3"> </i>
                             <span className="none">Subscribers<i className="fa fa-angle-down pull-right align-bottom" /></span>
@@ -111,8 +106,6 @@ export default function Sidebar(props) {
                             </span>
                         </Link>
                     </li>
-
-
                     <li className="parent">
                         <Link to={"/contactus"}><i className="fa fa-envelope mr-3"> </i>
                             <span className="none">ContactUs<i className="fa fa-angle-down pull-right align-bottom" /></span>
