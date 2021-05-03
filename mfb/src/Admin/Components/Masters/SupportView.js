@@ -6,7 +6,6 @@ import Sidebar from '../../Sidebar';
 import Footer from '../../Footer';
 const initialFieldValues = {
     supportId: 0,
-    subjectId: "",
     name: "",
     email: "",
     mobile: "",
@@ -23,7 +22,7 @@ export default function SupportView(props) {
             [name]: value
         })
     }
-    const applicationAPI = (url = 'https://localhost:44313/api/support/') => {
+    const applicationAPI = (url = "https://munnyapi.azurewebsites.net/api/support/") => {
         return {
             fetchCustomerView: () => axios.get(url + 'getbyid/' + props.match.params["supportId"]),
         }

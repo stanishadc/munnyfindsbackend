@@ -88,15 +88,15 @@ export default function ServiceList(props) {
       addOrEdit(formData, resetForm);
     }
   };
-  const applicationAPI = (url = "https://localhost:44313/api/service/") => {
+  const applicationAPI = (url = "https://munnyapi.azurewebsites.net/api/service/") => {
     console.log();
     return {
       fetchBusinessType: (id) =>
-        axios.get("https://localhost:44313/api/businesstype/Get/"),
+        axios.get("https://munnyapi.azurewebsites.net/api/businesstype/Get/"),
       fetchBusiness: (id) =>
-        axios.get("https://localhost:44313/api/business/GetByType/" + id),
+        axios.get("https://munnyapi.azurewebsites.net/api/business/GetByType/" + id),
       fetchCategory: (id) =>
-        axios.get("https://localhost:44313/api/category/GetByType/" + id),
+        axios.get("https://munnyapi.azurewebsites.net/api/category/GetByType/" + id),
       fetchAll: () => axios.get(url + "get"),
       create: (newRecord) => axios.post(url + "insert", newRecord),
       update: (id, updateRecord) =>

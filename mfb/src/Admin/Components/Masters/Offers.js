@@ -74,8 +74,8 @@ export default function OffersList(props) {
             formData.append("imageName", values.imageName);
             formData.append('imageFile', values.imageFile)
             formData.append("offerCode", values.offerCode);
-            formData.append("startDate", (values.startDate).toLocaleString())
-            formData.append("endDate", (values.endDate).toLocaleString())
+            formData.append("startDate", values.startDate);
+            formData.append("endDate", values.endDate);
             formData.append("createdDate", values.createdDate)
             formData.append("updatedDate", values.updatedDate)
             formData.append("status", values.status)
@@ -85,10 +85,10 @@ export default function OffersList(props) {
         }
     };
     const applicationAPI = (
-        url = "https://localhost:44313/api/offers/"
+        url = "https://munnyapi.azurewebsites.net/api/offers/"
     ) => {
         return {
-            fetchAll: () => axios.get(url + "get"),
+            fetchAll: () => axios.get(url + "GetOffers"),
             create: (newRecord) => axios.post(url + "insert", newRecord),
             update: (id, updateRecord) => axios.put(url + "update/" + id, updateRecord),
             delete: (id) => axios.delete(url + "delete/" + id),

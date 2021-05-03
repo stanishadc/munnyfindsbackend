@@ -37,7 +37,7 @@ export default function Home(props) {
       setIsBLoading(false)
     }
   }
-  const applicationAPI = (url = 'https://localhost:44313/api/user/') => {
+  const applicationAPI = (url = "https://munnyapi.azurewebsites.net/api/user/") => {
     return {
       CheckAdminLogin: newRecord => axios.post(url + "adminlogin", newRecord)
     }
@@ -80,7 +80,7 @@ export default function Home(props) {
                   <div className="input-group-prepend">
                     <span className="input-group-text" id="basic-addon1"><i className="fa fa-user" /></span>
                   </div>
-                  <input type="text" className={"form-control mt-0" + applyErrorClass('email')} name="email" placeholder="email" value={values.email} onChange={handleInputChange} />
+                  <input type="text" className={"form-control mt-0" + applyErrorClass('email')} name="email" placeholder="Email" value={values.email} onChange={handleInputChange} />
                 </div>
                 <div className="input-group mb-3">
                   <div className="input-group-prepend">

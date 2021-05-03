@@ -51,7 +51,7 @@ export default function BusinessTypes(props) {
     }
   };
   const applicationAPI = (
-    url = "https://localhost:44313/api/businesstype/"
+    url = "https://munnyapi.azurewebsites.net/api/businesstype/"
   ) => {
     return {
       fetchAll: () => axios.get(url + "get"),

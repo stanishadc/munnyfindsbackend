@@ -53,8 +53,8 @@ export default function UsersList(props) {
             formData.append('emailConfirmation', values.emailConfirmation)
             formData.append('phoneNumber', values.phoneNumber)
             formData.append('phoneNumberConfirmation', values.phoneNumberConfirmation)
-            // formData.append('createdDate', values.createdDate)
-            // formData.append('updatedDate', values.updatedDate)
+            formData.append('createdDate', values.createdDate)
+            formData.append('updatedDate', values.updatedDate)
             formData.append('roleId', parseInt(values.roleId))
             formData.append('status', values.status)
             console.log(values)
@@ -62,7 +62,7 @@ export default function UsersList(props) {
             addOrEdit(formData, resetForm)
         }
     }
-    const applicationAPI = (url = 'https://localhost:44313/api/user/') => {
+    const applicationAPI = (url = "https://munnyapi.azurewebsites.net/api/user/") => {
         return {
             fetchAll: () => axios.get(url + 'get'),
             create: newRecord => axios.post(url + "insert", newRecord),

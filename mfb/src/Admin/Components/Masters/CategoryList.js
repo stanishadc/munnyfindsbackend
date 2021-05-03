@@ -54,11 +54,11 @@ export default function CategoryList(props) {
       addOrEdit(formData, resetForm);
     }
   };
-  const applicationAPI = (url = "https://localhost:44313/api/category/") => {
+  const applicationAPI = (url = "https://munnyapi.azurewebsites.net/api/category/") => {
     console.log(1);
     return {
       fetchBusinessType: (id) =>
-        axios.get("https://localhost:44313/api/businesstype/Get/"),
+        axios.get("https://munnyapi.azurewebsites.net/api/businesstype/Get/"),
       fetchAll: () => axios.get(url + "get"),
       create: (newRecord) => axios.post(url + "insert", newRecord),
       update: (id, updateRecord) =>

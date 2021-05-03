@@ -93,18 +93,19 @@ export default function ServicePriceList(props) {
       formData.append("createdDate", values.createdDate);
       formData.append("updatedDate", values.updatedDate);
       console.log(values);
+      console.log(2);
       addOrEdit(formData, resetForm);
     }
   };
   const applicationAPI = (
-    url = "https://localhost:44313/api/serviceprice/"
+    url = "https://munnyapi.azurewebsites.net/api/serviceprice/"
   ) => {
     return {
-      fetchBusinessType: (id) => axios.get("https://localhost:44313/api/businesstype/Get/"),
+      fetchBusinessType: (id) => axios.get("https://munnyapi.azurewebsites.net/api/businesstype/Get/"),
       fetchAll: () => axios.get(url + "get"),
-      fetchBusiness: (id) => axios.get("https://localhost:44313/api/business/GetByType/" + id),
-      fetchCategory: (id) => axios.get("https://localhost:44313/api/category/GetByType/" + id),
-      fetchService: (id) => axios.get("https://localhost:44313/api/service/GetByType/" + id),
+      fetchBusiness: (id) => axios.get("https://munnyapi.azurewebsites.net/api/business/GetByType/" + id),
+      fetchCategory: (id) => axios.get("https://munnyapi.azurewebsites.net/api/category/GetByType/" + id),
+      fetchService: (id) => axios.get("https://munnyapi.azurewebsites.net/api/service/GetByBusinessType/" + id),
       create: (newRecord) => axios.post(url + "insert", newRecord),
       update: (id, updateRecord) => axios.put(url + "update/" + id, updateRecord),
       delete: (id) => axios.delete(url + "delete/" + id),
