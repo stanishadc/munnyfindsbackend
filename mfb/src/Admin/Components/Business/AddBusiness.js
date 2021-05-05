@@ -5,6 +5,7 @@ import Header from '../../Header';
 import Sidebar from '../../Sidebar';
 import Footer from '../../Footer';
 import { Link } from 'react-router-dom';
+const defaultProductImage = "/assets/img/default-avatar.jpg";
 const initialFieldValues = {
     businessId: 0,
     businessName: '',
@@ -31,6 +32,9 @@ const initialFieldValues = {
     password: '',
     about: '',
     currency: '',
+    imageSrc: defaultProductImage,
+    imageFile: null,
+    imageName: '',
 }
 export default function AddBusiness(props) {
     const [businessTypeList, setBusinessTypeList] = useState([])
@@ -43,6 +47,27 @@ export default function AddBusiness(props) {
             ...values,
             [name]: value
         })
+    }
+    const showPreview = e => {
+        if (e.target.files && e.target.files[0]) {
+            let imageFile = e.target.files[0];
+            const reader = new FileReader();
+             reader.onload = x => {
+                setValues({
+                    ...values,
+                    imageFile,
+                    imageSrc: x.target.result
+                })
+            }
+            reader.readAsDataURL(imageFile)
+        }
+        else {
+            setValues({
+                ...values,
+                imageFile: null,
+                imageSrc: defaultProductImage
+            })
+        }
     }
     const validate = () => {
         let temp = {}
@@ -85,6 +110,8 @@ export default function AddBusiness(props) {
             formData.append('businessurl', values.businessurl)
             formData.append('about', values.about)
             formData.append('currency', values.currency)
+            formData.append("imageName", values.imageName)
+            formData.append('imageFile', values.imageFile)
             console.log(values)
             addOrEdit(formData, resetForm)
         }
@@ -110,7 +137,8 @@ export default function AddBusiness(props) {
             .catch(err => console.log(err))
     }
     const resetForm = () => {
-        setValues(initialFieldValues)
+        setValues(initialFieldValues);
+        document.getElementById('image-uploader').value = null;
     }
     useEffect(() => {
         refreshBusinessType();
@@ -125,7 +153,7 @@ export default function AddBusiness(props) {
                 </div>
                 <div className="col-sm-9 col-xs-12 content pt-3 pl-0">
                     <div className="mt-4 mb-4 p-3 bg-white border shadow-sm lh-sm">
-                        {/*Product Listing*/}
+                        {/*Product Listing*/}s
                         <div className="product-list">
                             <div className="row border-bottom mb-4">
                                 <div className="col-sm-8 pt-2"><h6 className="mb-4 bc-header">Add New Business</h6></div>
@@ -247,6 +275,24 @@ export default function AddBusiness(props) {
                                                 </div>
                                             </div>
                                             <div className="form-group row floating-label">
+                                            <div className="col-sm-6 col-12">
+                                            <h6 className="mb-3">Business Image</h6>
+                                            <div className="form-group row">
+                                                <div className="col-sm-12 col-12">
+                                                    <div className="picture-container">
+                                                        <div className="picture">
+                                                            <img src={values.imageSrc} className="picture-src" width="200px" height="200px" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className="form-group row floating-label">
+                                                <div className="col-sm-12 col-12">
+                                                    <input id="image-uploader" className={"form-control-file" + applyErrorClass('imageSrc')} type="file" accept="image/*" onChange={showPreview} />
+                                                    <label htmlFor="tag">Select Business Image</label>
+                                                </div>
+                                            </div>
+                                        </div>
                                             </div>
                                             <div className="form-group row floating-label">
                                                 <div className="col-sm-4">

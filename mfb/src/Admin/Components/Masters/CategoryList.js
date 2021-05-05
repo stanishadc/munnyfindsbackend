@@ -4,6 +4,7 @@ import { handleSuccess, handleError } from "../../CustomAlerts";
 import Header from "../../Header";
 import Sidebar from "../../Sidebar";
 import Footer from "../../Footer";
+const defaultProductImage = "/assets/img/default-avatar.jpg";
 const initialFieldValues = {
   categoryId: 0,
   categoryName: "",
@@ -13,6 +14,9 @@ const initialFieldValues = {
   businessTypeId: 0,
   business: "",
   categoryurl: "",
+  imageName: '',
+  imageSrc: defaultProductImage,
+  imageFile: null,
 };
 export default function CategoryList(props) {
   const [categoryList, setCategoryList] = useState([]);
@@ -31,6 +35,27 @@ export default function CategoryList(props) {
       [name]: value,
     });
   };
+  const showPreview = e => {
+    if (e.target.files && e.target.files[0]) {
+        let imageFile = e.target.files[0];
+        const reader = new FileReader();
+         reader.onload = x => {
+            setValues({
+                ...values,
+                imageFile,
+                imageSrc: x.target.result
+            })
+        }
+        reader.readAsDataURL(imageFile)
+    }
+    else {
+        setValues({
+            ...values,
+            imageFile: null,
+            imageSrc: defaultProductImage
+        })
+    }
+}
   const validate = () => {
     let temp = {};
     temp.categoryName = values.categoryName === "" ? false : true;
@@ -50,6 +75,8 @@ export default function CategoryList(props) {
       formData.append("business", values.business);
       formData.append("status", values.status);
       formData.append("categoryurl", values.categoryurl);
+      formData.append("imageName", values.imageName);
+      formData.append('imageFile', values.imageFile);
       console.log(values);
       addOrEdit(formData, resetForm);
     }
@@ -101,6 +128,7 @@ export default function CategoryList(props) {
   };
   const resetForm = () => {
     setValues(initialFieldValues);
+    document.getElementById('image-uploader').value = null;
   };
   function refreshCategoryList() {
     applicationAPI()
@@ -180,6 +208,26 @@ export default function CategoryList(props) {
                       <label htmlFor="status">Status</label>
                     </div>
                   </div>
+                                <div className="form-group row floating-label">
+                                    <div className="col-sm-6 col-12">
+                                            <h6 className="mb-3">Category Image</h6>
+                                            <div className="form-group row">
+                                                <div className="col-sm-12 col-12">
+                                                    <div className="picture-container">
+                                                        <div className="picture">
+                                                            <img src={values.imageSrc} className="picture-src" width="200px" height="200px" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className="form-group row floating-label">
+                                                <div className="col-sm-12 col-12">
+                                                    <input id="image-uploader" className={"form-control-file" + applyErrorClass('imageSrc')} type="file" accept="image/*" onChange={showPreview} />
+                                                    <label htmlFor="tag">Select category Image</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                      </div>
                   <div className="form-group row floating-label">
                     <div className="col-sm-4">
                       <button type="submit" className="btn btn-primary mr-3">
