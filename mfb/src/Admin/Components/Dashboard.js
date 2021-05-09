@@ -171,7 +171,7 @@ export default function Dashboard(props) {
                                                 <td>{moment(app.appointmentDate).format('MMMM Do YYYY, h:mm:ss a')}</td>
                                                 <td>{app.paymentStatus}</td>
                                                 <td className="align-middle text-center">
-                                                    <Link to={"/appointment/" + app.appointmentId} className="btn btn-success mr-2"><i className="fa fa-eye" />View</Link>
+                                                    <Link to={"/appointment/" + app.appointmentId} className="btn btn-success btn-sm mr-2"><i className="fa fa-eye" /> View</Link>
                                                 </td>
                                             </tr>
                                         )}

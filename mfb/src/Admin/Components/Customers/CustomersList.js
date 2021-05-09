@@ -56,7 +56,7 @@ export default function CustomersList(props) {
                                                 <td>{customer.customerMobile}</td>
                                                 <td>{customer.status ? "active" : "inactive"}</td>
                                                 <td>
-                                                    <Link to={"/CustomerView/" + customer.customerId} className="btn btn-success mr-2"><i className="fa fa-eye" />View</Link>
+                                                    <Link to={"/CustomerView/" + customer.customerId} className="btn btn-success btn-sm mr-2"><i className="fa fa-eye" /> View</Link>
                                                 </td>
                                             </tr>
                                         )}

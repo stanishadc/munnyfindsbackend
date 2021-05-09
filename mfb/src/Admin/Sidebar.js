@@ -4,6 +4,7 @@ import auth from './Auth'
 export default function Sidebar(props) {
     const history = useHistory();
     return (
+        
         <div className="inner-sidebar mr-3">
             {/*Image Avatar*/}
             <div className="avatar text-center">

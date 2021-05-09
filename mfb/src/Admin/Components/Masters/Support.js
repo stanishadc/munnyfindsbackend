@@ -43,34 +43,35 @@ export default function Support(props) {
                             <div className="col-sm-12">
                                 <div className="mt-4 mb-3 p-3 button-container bg-white border shadow-sm">
                                     <h6 className="mb-3">Support Details</h6>
-                                </div>
-                                <div className="table-responsive product-list">
-                                    <table className="table table-bordered table-striped mt-3" id="supportList">
-                                        <thead>
-                                            <tr>
-                                                <th>Subject</th>
-                                                <th>Name</th>
-                                                <th>Email</th>
-                                                <th>Mobile</th>
-                                                <th>Message</th>
-                                                <th>Action</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            {supportList.map(sup =>
-                                                <tr key={sup.supportId}>
-                                                    <td>{sup.subject.subjectName}</td>
-                                                    <td>{sup.name}</td>
-                                                    <td>{sup.email}</td>
-                                                    <td>{sup.mobile}</td>
-                                                    <td>{sup.message}</td>
-                                                    <td>
-                                                        <Link to={"/SupportView/" + sup.supportId} className="btn btn-success mr-2"><i className="fa fa-eye" />View</Link>
-                                                    </td>
+
+                                    <div className="table-responsive product-list">
+                                        <table className="table table-bordered table-striped mt-3" id="supportList">
+                                            <thead>
+                                                <tr>
+                                                    <th>Subject</th>
+                                                    <th>Name</th>
+                                                    <th>Email</th>
+                                                    <th>Mobile</th>
+                                                    <th>Message</th>
+                                                    <th>Action</th>
                                                 </tr>
-                                            )}
-                                        </tbody>
-                                    </table>
+                                            </thead>
+                                            <tbody>
+                                                {supportList.map(sup =>
+                                                    <tr key={sup.supportId}>
+                                                        <td>{sup.subject.subjectName}</td>
+                                                        <td>{sup.name}</td>
+                                                        <td>{sup.email}</td>
+                                                        <td>{sup.mobile}</td>
+                                                        <td>{sup.message}</td>
+                                                        <td>
+                                                            <Link to={"/SupportView/" + sup.supportId} className="btn btn-success btn-sm mr-2"><i className="fa fa-eye" /> View</Link>
+                                                        </td>
+                                                    </tr>
+                                                )}
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
                         </div>

@@ -174,10 +174,11 @@ export default function OffersList(props) {
                                             <div className="form-group row floating-label">
                                                 <div className="col-sm-12 col-12">
                                                     <input id="image-uploader" className={"form-control-file" + applyErrorClass('imageSrc')} type="file" accept="image/*" onChange={showPreview} />
-                                                    <label htmlFor="tag">Select Offers Image</label>
+                                                   
                                                 </div>
                                             </div>
                                         </div>
+                                        
                                         <div className="col-sm-6 col-12">
                                             <div className="form-group row floating-label">
                                                 <div className="col-sm-12 col-12">
@@ -240,11 +241,8 @@ export default function OffersList(props) {
                                                 </button>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                    <div className="table-responsive product-list">
+
+                                    <div className="table-responsive product-list">
                         <table
                             className="table table-bordered table-striped mt-3"
                             id="offersList"
@@ -268,20 +266,20 @@ export default function OffersList(props) {
                                         <td>
 
                                             <button
-                                                className="btn btn-success mr-2"
+                                                className="btn btn-success btn-sm mr-2"
                                                 onClick={() => {
                                                     showEditDetails(off);
                                                 }}
                                             >
-                                                <i className="fa fa-pencil" />
+                                                <i className="fas fa-pencil-alt" />
                                             </button>
                                             <button
-                                                className="btn btn-danger"
+                                                className="btn btn-danger btn-sm"
                                                 onClick={(e) =>
                                                     onDelete(e, parseInt(off.offerId))
                                                 }
                                             >
-                                                <i className="fas fa-trash" />
+                                                <i className="fas fa-trash-alt" />
                                             </button>
                                         </td>
                                     </tr>
@@ -289,6 +287,12 @@ export default function OffersList(props) {
                             </tbody>
                         </table>
                     </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                  
                 </div>
             </div>
             <Footer></Footer>

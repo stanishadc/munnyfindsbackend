@@ -37,25 +37,25 @@ export default function CategoryList(props) {
   };
   const showPreview = e => {
     if (e.target.files && e.target.files[0]) {
-        let imageFile = e.target.files[0];
-        const reader = new FileReader();
-         reader.onload = x => {
-            setValues({
-                ...values,
-                imageFile,
-                imageSrc: x.target.result
-            })
-        }
-        reader.readAsDataURL(imageFile)
+      let imageFile = e.target.files[0];
+      const reader = new FileReader();
+      reader.onload = x => {
+        setValues({
+          ...values,
+          imageFile,
+          imageSrc: x.target.result
+        })
+      }
+      reader.readAsDataURL(imageFile)
     }
     else {
-        setValues({
-            ...values,
-            imageFile: null,
-            imageSrc: defaultProductImage
-        })
+      setValues({
+        ...values,
+        imageFile: null,
+        imageSrc: defaultProductImage
+      })
     }
-}
+  }
   const validate = () => {
     let temp = {};
     temp.categoryName = values.categoryName === "" ? false : true;
@@ -208,26 +208,13 @@ export default function CategoryList(props) {
                       <label htmlFor="status">Status</label>
                     </div>
                   </div>
-                                <div className="form-group row floating-label">
-                                    <div className="col-sm-6 col-12">
-                                            <h6 className="mb-3">Category Image</h6>
-                                            <div className="form-group row">
-                                                <div className="col-sm-12 col-12">
-                                                    <div className="picture-container">
-                                                        <div className="picture">
-                                                            <img src={values.imageSrc} className="picture-src" width="200px" height="200px" />
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div className="form-group row floating-label">
-                                                <div className="col-sm-12 col-12">
-                                                    <input id="image-uploader" className={"form-control-file" + applyErrorClass('imageSrc')} type="file" accept="image/*" onChange={showPreview} />
-                                                    <label htmlFor="tag">Select category Image</label>
-                                                </div>
-                                            </div>
-                                        </div>
-                                      </div>
+                  <div className="form-group row">
+                    <div class="col-md-3">
+                      <label>Select category Image</label>
+
+                    </div>
+                  </div>
+
                   <div className="form-group row floating-label">
                     <div className="col-sm-4">
                       <button type="submit" className="btn btn-primary mr-3">
@@ -242,52 +229,54 @@ export default function CategoryList(props) {
                       </button>
                     </div>
                   </div>
-                </div>
+
+
+                  <div className="table-responsive product-list">
+                    <table
+                      className="table table-bordered table-striped mt-3"
+                      id="categoryList"
+                    >
+                      <thead>
+                        <tr>
+                          <th>Business Type</th>
+                          <th>Category Name</th>
+                          <th>Status</th>
+                          <th>Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {categoryList.map((category) => (
+                          <tr key={category.categoryId}>
+                            <td>{category.businessType.business}</td>
+                            <td>{category.categoryName}</td>
+                            <td>{category.status ? "active" : "inactive"}</td>
+                            <td>
+                              <button
+                                className="btn btn-success btn-sm mr-2"
+                                onClick={() => {
+                                  showEditDetails(category);
+                                }}
+                              >
+                                <i className="fas fa-pencil-alt" />
+                              </button>
+                              <button
+                                className="btn btn-danger btn-sm"
+                                onClick={(e) =>
+                                  onDelete(e, parseInt(category.categoryId))
+                                }
+                              >
+                                <i className="fas fa-trash-alt" />
+                              </button>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div></div>
               </div>
             </div>
           </form>
-          <div className="table-responsive product-list">
-            <table
-              className="table table-bordered table-striped mt-3"
-              id="categoryList"
-            >
-              <thead>
-                <tr>
-                  <th>Business Type</th>
-                  <th>Category Name</th>
-                  <th>Status</th>
-                  <th>Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                {categoryList.map((category) => (
-                  <tr key={category.categoryId}>
-                    <td>{category.businessType.business}</td>
-                    <td>{category.categoryName}</td>
-                    <td>{category.status ? "active" : "inactive"}</td>
-                    <td>
-                      <button
-                        className="btn btn-success mr-2"
-                        onClick={() => {
-                          showEditDetails(category);
-                        }}
-                      >
-                        <i className="fa fa-pencil" />
-                      </button>
-                      <button
-                        className="btn btn-danger"
-                        onClick={(e) =>
-                          onDelete(e, parseInt(category.categoryId))
-                        }
-                      >
-                        <i className="fas fa-trash" />
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+
         </div>
       </div>
       <Footer></Footer>

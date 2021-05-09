@@ -270,11 +270,8 @@ export default function ServiceList(props) {
                       </button>
                     </div>
                   </div>
-                </div>
-              </div>
-            </div>
-          </form>
-          <div className="table-responsive product-list">
+
+                  <div className="table-responsive product-list">
             <table
               className="table table-bordered table-striped mt-3"
               id="serviceList"
@@ -297,18 +294,18 @@ export default function ServiceList(props) {
                     <td>{ser.status ? "active" : "inactive"}</td>
                     <td>
                       <button
-                        className="btn btn-success mr-2"
+                        className="btn btn-success btn-sm mr-2"
                         onClick={() => {
                           showEditDetails(ser);
                         }}
                       >
-                        <i className="fa fa-pencil" />
+                        <i className="fas fa-pencil-alt" />
                       </button>
                       <button
-                        className="btn btn-danger"
+                        className="btn btn-danger btn-sm"
                         onClick={(e) => onDelete(e, parseInt(ser.serviceId))}
                       >
-                        <i className="fas fa-trash" />
+                        <i className="fas fa-trash-alt" />
                       </button>
                     </td>
                   </tr>
@@ -316,6 +313,15 @@ export default function ServiceList(props) {
               </tbody>
             </table>
           </div>
+
+
+
+
+                </div>
+              </div>
+            </div>
+          </form>
+   
         </div>
       </div>
       <Footer></Footer>

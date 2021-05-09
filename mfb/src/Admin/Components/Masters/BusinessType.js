@@ -182,20 +182,20 @@ export default function BusinessTypes(props) {
                     <td>{bus.status ? "active" : "inactive"}</td>
                     <td>
                       <button
-                        className="btn btn-success mr-2"
+                        className="btn btn-success btn-sm mr-2"
                         onClick={() => {
                           showEditDetails(bus);
                         }}
                       >
-                        <i className="fa fa-pencil" />
+                        <i className="fas fa-pencil-alt" />
                       </button>
                       <button
-                        className="btn btn-danger"
+                        className="btn btn-danger btn-sm"
                         onClick={(e) =>
                           onDelete(e, parseInt(bus.businessTypeId))
                         }
                       >
-                        <i className="fas fa-trash" />
+                        <i className="fas fa-trash-alt" />
                       </button>
                     </td>
                   </tr>

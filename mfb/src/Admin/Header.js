@@ -15,7 +15,11 @@ export default class Header extends Component {
                 {/*Logo*/}
                 <div className="col-sm-3 pl-0 text-center header-logo">
                     <div className="bg-theme mr-3 pt-3 pb-2 mb-0">
-                        <h3 className="logo"><Link to={"/"} className="text-secondary logo"><i className="fa fa-cart" /><span className="small">Munny Finds</span></Link></h3>
+                        <h3 className="logo">
+                            <Link to={"/"} className="text-secondary logo"><i className="fa fa-cart" />
+                            <span className="small">Munny Finds</span>
+                            </Link>
+                            </h3>
                     </div>
                 </div>
                 {/*Logo*/}
@@ -25,9 +29,10 @@ export default class Header extends Component {
                         {/*Menu Icons*/}
                         <div className="col-sm-4 col-8 pl-0">
                             {/*Toggle sidebar*/}
-                            <span className="menu-icon">
+                             <span className="menu-icon">
                                 <span id="sidebar-toggle-btn" />
                             </span>
+                            
                             {/*Toggle sidebar*/}
 
                             {/*Inbox icon*/}

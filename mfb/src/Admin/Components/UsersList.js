@@ -160,11 +160,7 @@ export default function UsersList(props) {
                                         </div>
                                     </div>
 
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                    <div className="table-responsive product-list">
+                                    <div className="table-responsive product-list">
                         <table className="table table-bordered table-striped mt-3" id="categoryList">
                             <thead>
                                 <tr>
@@ -183,13 +179,19 @@ export default function UsersList(props) {
                                         <td>{user.phoneNumber}</td>
                                         <td>{user.status ? "active" : "inactive"}</td>
                                         <td>
-                                            <button className="btn btn-success mr-2" onClick={() => { showEditDetails(user) }}><i className="fa fa-pencil" /></button>
-                                            <button className="btn btn-danger" onClick={e => onDelete(e, parseInt(user.userId))}><i className="fas fa-trash" /></button></td>
+                                            <button className="btn btn-success mr-2" onClick={() => { showEditDetails(user) }}><i className="fas fa-pencil-alt" /></button>
+                                            <button className="btn btn-danger" onClick={e => onDelete(e, parseInt(user.userId))}><i className="fas fa-trash-alt" /></button></td>
                                     </tr>
                                 )}
                             </tbody>
                         </table>
                     </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                 
                 </div>
             </div>
             <Footer></Footer>
