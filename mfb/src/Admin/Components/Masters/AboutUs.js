@@ -57,7 +57,7 @@ export default function AboutUs(props) {
       addOrEdit(formData);
     }
   };
-  const applicationAPI = (url = "https://munnyapi.azurewebsites.net/api/aboutus/") => {
+  const applicationAPI = (url = "http://165.22.216.222/api/aboutus/") => {
     return {
       fetchAll: () => axios.get(url + "get"),
       create: (newRecord) => axios.post(url + "insert", newRecord),

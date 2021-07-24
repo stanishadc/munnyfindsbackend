@@ -45,7 +45,7 @@ export default function SubscribersList(props) {
         setValues(initialFieldValues);
     };
 
-    const applicationAPI = (url = "https://munnyapi.azurewebsites.net/api/subscribe/") => {
+    const applicationAPI = (url = "http://165.22.216.222/api/subscribe/") => {
         return {
             fetchAll: () => axios.get(url + 'get'),
             update: (id, updateRecord) =>

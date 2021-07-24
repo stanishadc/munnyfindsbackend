@@ -51,7 +51,7 @@ export default function ContactUs(props) {
         }
     };
     const applicationAPI = (
-        url = "https://munnyapi.azurewebsites.net/api/contactus/"
+        url = "http://165.22.216.222/api/contactus/"
     ) => {
         return {
             fetchAll: () => axios.get(url + "get"),

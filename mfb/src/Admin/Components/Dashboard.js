@@ -15,10 +15,10 @@ export default function Dashboard(props) {
     const [totalCount, setTotalCount] = useState('')
     const [appointmentsList, setAppointmentsList] = useState([])
 
-    const applicationAPI = (url = "https://munnyapi.azurewebsites.net/api/appointments/") => {
+    const applicationAPI = (url = "http://165.22.216.222/api/appointments/") => {
         return {
             fetchAppointments: () => axios.get(url + 'get'),
-            fetchBusiness: () => axios.get("https://munnyapi.azurewebsites.net/api/business/" + 'get')
+            fetchBusiness: () => axios.get("http://165.22.216.222/api/business/" + 'get')
         }
     }
 

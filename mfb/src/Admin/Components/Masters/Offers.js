@@ -85,7 +85,7 @@ export default function OffersList(props) {
         }
     };
     const applicationAPI = (
-        url = "https://munnyapi.azurewebsites.net/api/offers/"
+        url = "http://165.22.216.222/api/offers/"
     ) => {
         return {
             fetchAll: () => axios.get(url + "GetOffers"),

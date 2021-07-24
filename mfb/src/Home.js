@@ -37,7 +37,7 @@ export default function Home(props) {
       setIsBLoading(false)
     }
   }
-  const applicationAPI = (url = "https://munnyapi.azurewebsites.net/api/user/") => {
+  const applicationAPI = (url = "http://165.22.216.222/api/user/") => {
     return {
       CheckAdminLogin: newRecord => axios.post(url + "adminlogin", newRecord)
     }

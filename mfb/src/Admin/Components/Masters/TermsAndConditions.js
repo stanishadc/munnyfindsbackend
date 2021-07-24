@@ -43,7 +43,7 @@ export default function PrivacyPolicy(props) {
       addOrEdit(formData);
     }
   };
-  const applicationAPI = (url = "https://munnyapi.azurewebsites.net/api/termsandconditions/") => {
+  const applicationAPI = (url = "http://165.22.216.222/api/termsandconditions/") => {
     return {
       fetchAll: () => axios.get(url + "get"),
       update: (id, updateRecord) =>

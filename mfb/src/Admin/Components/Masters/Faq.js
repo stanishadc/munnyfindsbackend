@@ -48,11 +48,11 @@ export default function Fqa(props) {
     }
   };
   const applicationAPI = (
-    url = "https://munnyapi.azurewebsites.net/api/faq/"
+    url = "http://165.22.216.222/api/faq/"
   ) => {
     return {
       fetchSubjectName: (id) =>
-        axios.get("https://munnyapi.azurewebsites.net/api/subject/get/"),
+        axios.get("http://165.22.216.222/api/subject/get/"),
       fetchAll: () => axios.get(url + "get"),
       create: (newRecord) => axios.post(url + "insert", newRecord),
       update: (id, updateRecord) =>

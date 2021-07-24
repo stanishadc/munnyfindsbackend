@@ -52,12 +52,12 @@ export default function AppointmentsView(props) {
         setErrors(temp);
         return Object.values(temp).every((x) => x === true);
     };
-    const applicationAPI = (url = "https://munnyapi.azurewebsites.net/api/appointments/") => {
+    const applicationAPI = (url = "http://165.22.216.222/api/appointments/") => {
         return {
             fetchAll: () => axios.get(url + "get"),
             fetchAppointmentsView: () => axios.get(url + 'getbyid/' + props.match.params["appointmentId"]),
             update: (id, updateRecord) => axios.put(url + "update/" + id, updateRecord),
-            fetchBusinessEmployee: (id) => axios.get("https://munnyapi.azurewebsites.net/api/businessemployee/getbyid/" + id)
+            fetchBusinessEmployee: (id) => axios.get("http://165.22.216.222/api/businessemployee/getbyid/" + id)
         }
     }
     const handleSubmit = (e) => {

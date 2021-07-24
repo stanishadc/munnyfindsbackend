@@ -22,7 +22,7 @@ export default function SupportView(props) {
             [name]: value
         })
     }
-    const applicationAPI = (url = "https://munnyapi.azurewebsites.net/api/support/") => {
+    const applicationAPI = (url = "http://165.22.216.222/api/support/") => {
         return {
             fetchCustomerView: () => axios.get(url + 'getbyid/' + props.match.params["supportId"]),
         }
