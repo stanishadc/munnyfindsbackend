@@ -77,7 +77,7 @@ export default function BusinessImages(props) {
         }
     }
 
-    const applicationAPI = (url = "http://165.22.216.222/api/businessimages/") => {
+    const applicationAPI = (url = "https://api.munnyfinds.com//api/businessimages/") => {
         return {
             fetchProductImages: () => axios.get(url + 'GetByBusiness/' + props.match.params["businessId"]),
             create: newRecord => axios.post(url + "insert", newRecord),

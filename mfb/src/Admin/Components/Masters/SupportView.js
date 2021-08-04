@@ -22,7 +22,7 @@ export default function SupportView(props) {
             [name]: value
         })
     }
-    const applicationAPI = (url = "http://165.22.216.222/api/support/") => {
+    const applicationAPI = (url = "https://api.munnyfinds.com//api/support/") => {
         return {
             fetchCustomerView: () => axios.get(url + 'getbyid/' + props.match.params["supportId"]),
         }

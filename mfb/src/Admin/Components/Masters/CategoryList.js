@@ -81,11 +81,11 @@ export default function CategoryList(props) {
       addOrEdit(formData, resetForm);
     }
   };
-  const applicationAPI = (url = "http://165.22.216.222/api/category/") => {
+  const applicationAPI = (url = "https://api.munnyfinds.com//api/category/") => {
     console.log(1);
     return {
       fetchBusinessType: (id) =>
-        axios.get("http://165.22.216.222/api/businesstype/Get/"),
+        axios.get("https://api.munnyfinds.com//api/businesstype/Get/"),
       fetchAll: () => axios.get(url + "get"),
       create: (newRecord) => axios.post(url + "insert", newRecord),
       update: (id, updateRecord) =>

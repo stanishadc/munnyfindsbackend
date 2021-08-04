@@ -45,7 +45,7 @@ export default function SubscribersList(props) {
         setValues(initialFieldValues);
     };
 
-    const applicationAPI = (url = "http://165.22.216.222/api/subscribe/") => {
+    const applicationAPI = (url = "https://api.munnyfinds.com//api/subscribe/") => {
         return {
             fetchAll: () => axios.get(url + 'get'),
             update: (id, updateRecord) =>

@@ -11,7 +11,7 @@ export default function Support(props) {
     const [errors, setErrors] = useState({});
 
     const applicationAPI = (
-        url = "http://165.22.216.222/api/support/"
+        url = "https://api.munnyfinds.com//api/support/"
     ) => {
         return {
             fetchAll: () => axios.get(url + "get"),

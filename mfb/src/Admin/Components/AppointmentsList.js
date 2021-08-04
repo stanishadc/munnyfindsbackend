@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 import moment from 'moment';
 export default function AppointmentsList(props) {
     const [appointmentsList, setAppointmentsList] = useState([])
-    const applicationAPI = (url = 'http://165.22.216.222/api/appointments/') => {
+    const applicationAPI = (url = 'https://api.munnyfinds.com//api/appointments/') => {
         return {
             fetchAll: () => axios.get(url + 'get'),
         }

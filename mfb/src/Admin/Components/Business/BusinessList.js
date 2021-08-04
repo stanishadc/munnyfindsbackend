@@ -7,7 +7,7 @@ import Footer from '../../Footer';
 import { Link } from 'react-router-dom';
 export default function BusinessList(props) {
     const [businessList, setBusinessList] = useState([])
-    const applicationAPI = (url = "http://165.22.216.222/api/business/") => {
+    const applicationAPI = (url = "https://api.munnyfinds.com//api/business/") => {
         return {
             fetchAll: () => axios.get(url + 'get'),
             delete: id => axios.delete(url + "delete/" + id)
