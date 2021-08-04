@@ -88,15 +88,15 @@ export default function ServiceList(props) {
       addOrEdit(formData, resetForm);
     }
   };
-  const applicationAPI = (url = "https://api.munnyfinds.com//api/service/") => {
+  const applicationAPI = (url = "https://api.munnyfinds.com/api/service/") => {
     console.log();
     return {
       fetchBusinessType: (id) =>
-        axios.get("https://api.munnyfinds.com//api/businesstype/Get/"),
+        axios.get("https://api.munnyfinds.com/api/businesstype/Get/"),
       fetchBusiness: (id) =>
-        axios.get("https://api.munnyfinds.com//api/business/GetByType/" + id),
+        axios.get("https://api.munnyfinds.com/api/business/GetByType/" + id),
       fetchCategory: (id) =>
-        axios.get("https://api.munnyfinds.com//api/category/GetByType/" + id),
+        axios.get("https://api.munnyfinds.com/api/category/GetByType/" + id),
       fetchAll: () => axios.get(url + "get"),
       create: (newRecord) => axios.post(url + "insert", newRecord),
       update: (id, updateRecord) =>

@@ -17,7 +17,7 @@ const initialFieldValues = {
 export default function CustomerViewList(props) {
     const [values, setValues] = useState(initialFieldValues)
     const [errors, setErrors] = useState({})
-    const applicationAPI = (url = "https://api.munnyfinds.com//api/customer/") => {
+    const applicationAPI = (url = "https://api.munnyfinds.com/api/customer/") => {
         return {
             fetchCustomerView: () => axios.get(url + 'getbyid/' + props.match.params["customerId"]),
         }

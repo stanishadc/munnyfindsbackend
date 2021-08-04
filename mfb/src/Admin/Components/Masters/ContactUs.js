@@ -51,7 +51,7 @@ export default function ContactUs(props) {
         }
     };
     const applicationAPI = (
-        url = "https://api.munnyfinds.com//api/contactus/"
+        url = "https://api.munnyfinds.com/api/contactus/"
     ) => {
         return {
             fetchAll: () => axios.get(url + "get"),

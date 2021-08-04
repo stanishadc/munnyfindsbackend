@@ -85,7 +85,7 @@ export default function OffersList(props) {
         }
     };
     const applicationAPI = (
-        url = "https://api.munnyfinds.com//api/offers/"
+        url = "https://api.munnyfinds.com/api/offers/"
     ) => {
         return {
             fetchAll: () => axios.get(url + "GetOffers"),

@@ -37,7 +37,7 @@ export default function Home(props) {
       setIsBLoading(false)
     }
   }
-  const applicationAPI = (url = "https://api.munnyfinds.com//api/user/") => {
+  const applicationAPI = (url = "https://api.munnyfinds.com/api/user/") => {
     return {
       CheckAdminLogin: newRecord => axios.post(url + "adminlogin", newRecord)
     }

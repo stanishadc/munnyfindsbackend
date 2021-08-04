@@ -48,11 +48,11 @@ export default function Fqa(props) {
     }
   };
   const applicationAPI = (
-    url = "https://api.munnyfinds.com//api/faq/"
+    url = "https://api.munnyfinds.com/api/faq/"
   ) => {
     return {
       fetchSubjectName: (id) =>
-        axios.get("https://api.munnyfinds.com//api/subject/get/"),
+        axios.get("https://api.munnyfinds.com/api/subject/get/"),
       fetchAll: () => axios.get(url + "get"),
       create: (newRecord) => axios.post(url + "insert", newRecord),
       update: (id, updateRecord) =>

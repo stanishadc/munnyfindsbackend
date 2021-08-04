@@ -51,7 +51,7 @@ export default function BusinessTypes(props) {
     }
   };
   const applicationAPI = (
-    url = "https://api.munnyfinds.com//api/businesstype/"
+    url = "https://api.munnyfinds.com/api/businesstype/"
   ) => {
     return {
       fetchAll: () => axios.get(url + "get"),

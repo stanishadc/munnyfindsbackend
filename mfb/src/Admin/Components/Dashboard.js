@@ -15,10 +15,10 @@ export default function Dashboard(props) {
     const [totalCount, setTotalCount] = useState('')
     const [appointmentsList, setAppointmentsList] = useState([])
 
-    const applicationAPI = (url = "https://api.munnyfinds.com//api/appointments/") => {
+    const applicationAPI = (url = "https://api.munnyfinds.com/api/appointments/") => {
         return {
             fetchAppointments: () => axios.get(url + 'get'),
-            fetchBusiness: () => axios.get("https://api.munnyfinds.com//api/business/" + 'get')
+            fetchBusiness: () => axios.get("https://api.munnyfinds.com/api/business/" + 'get')
         }
     }
 
