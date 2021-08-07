@@ -151,13 +151,14 @@ export default function OffersList(props) {
                     <Sidebar />
                 </div>
                 <div className="col-sm-9 col-xs-12 content pt-3 pl-0">
-                    <form onSubmit={handleSubmit} autoComplete="off" noValidate>
+                    
                         <span className="text-secondary">
                             Dashboard <i className="fa fa-angle-right" /> Offers
-                          </span>
+                        </span>
                         <div className="row mt-3">
                             <div className="col-sm-12">
                                 <div className="mt-4 mb-3 p-3 button-container bg-white border shadow-sm">
+                                <form onSubmit={handleSubmit} autoComplete="off" noValidate>
                                     <h6 className="mb-3">Offer Details</h6>
                                     <div className="form-group row floating-label">
                                         <div className="col-sm-6 col-12">
@@ -174,11 +175,11 @@ export default function OffersList(props) {
                                             <div className="form-group row floating-label">
                                                 <div className="col-sm-12 col-12">
                                                     <input id="image-uploader" className={"form-control-file" + applyErrorClass('imageSrc')} type="file" accept="image/*" onChange={showPreview} />
-                                                   
+
                                                 </div>
                                             </div>
                                         </div>
-                                        
+
                                         <div className="col-sm-6 col-12">
                                             <div className="form-group row floating-label">
                                                 <div className="col-sm-12 col-12">
@@ -234,65 +235,59 @@ export default function OffersList(props) {
                                         <div className="col-sm-4">
                                             <button type="submit" className="btn btn-primary mr-3">
                                                 Submit
-                                                 </button> <button
+                                            </button> <button
                                                 type="button"
                                                 className="btn btn-danger"
                                                 onClick={resetForm} > Cancel
-                                                </button>
+                                            </button>
                                         </div>
                                     </div>
-
+                                    </form>
                                     <div className="table-responsive product-list">
-                        <table
-                            className="table table-bordered table-striped mt-3"
-                            id="offersList"
-                        >
-                            <thead>
-                                <tr>
-                                    <th>Title</th>
-                                    <th>Offer Code</th>
-                                    <th>StartDate</th>
-                                    <th>EndDate</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {offersList.map((off) => (
-                                    <tr key={off.offerId}>
-                                        <td>{off.title}</td>
-                                        <td>{off.offerCode}</td>
-                                        <td>{moment(off.startDate).format('Do MMMM yyyy')} </td>
-                                        <td>{moment(off.endDate).format('Do MMMM yyyy')} </td>
-                                        <td>
+                                        <table className="table table-bordered table-striped mt-3" id="offersList">
+                                            <thead>
+                                                <tr>
+                                                    <th>Title</th>
+                                                    <th>Offer Code</th>
+                                                    <th>StartDate</th>
+                                                    <th>EndDate</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {offersList.map((off) => (
+                                                    <tr key={off.offerId}>
+                                                        <td>{off.title}</td>
+                                                        <td>{off.offerCode}</td>
+                                                        <td>{moment(off.startDate).format('Do MMMM yyyy')} </td>
+                                                        <td>{moment(off.endDate).format('Do MMMM yyyy')} </td>
+                                                        <td>
 
-                                            <button
-                                                className="btn btn-success btn-sm mr-2"
-                                                onClick={() => {
-                                                    showEditDetails(off);
-                                                }}
-                                            >
-                                                <i className="fas fa-pencil-alt" />
-                                            </button>
-                                            <button
-                                                className="btn btn-danger btn-sm"
-                                                onClick={(e) =>
-                                                    onDelete(e, parseInt(off.offerId))
-                                                }
-                                            >
-                                                <i className="fas fa-trash-alt" />
-                                            </button>
-                                        </td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
-                    </div>
-
+                                                            <button
+                                                                className="btn btn-success btn-sm mr-2"
+                                                                onClick={() => {
+                                                                    showEditDetails(off);
+                                                                }}
+                                                            >
+                                                                <i className="fas fa-pencil-alt" />
+                                                            </button>
+                                                            <button
+                                                                className="btn btn-danger btn-sm"
+                                                                onClick={(e) =>
+                                                                    onDelete(e, parseInt(off.offerId))
+                                                                }
+                                                            >
+                                                                <i className="fas fa-trash-alt" />
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                ))}
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </form>
-                  
                 </div>
             </div>
             <Footer></Footer>

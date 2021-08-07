@@ -155,8 +155,7 @@ export default function CategoryList(props) {
         <div className="col-sm-3 col-xs-6 sidebar pl-0">
           <Sidebar />
         </div>
-        <div className="col-sm-9 col-xs-12 content pt-3 pl-0">
-          <form onSubmit={handleSubmit} autoComplete="off" noValidate>
+        <div className="col-sm-9 col-xs-12 content pt-3 pl-0">          
             <span className="text-secondary">
               Dashboard <i className="fa fa-angle-right" /> Category List
             </span>
@@ -164,6 +163,7 @@ export default function CategoryList(props) {
               <div className="col-sm-12">
                 <div className="mt-4 mb-3 p-3 button-container bg-white border shadow-sm">
                   <h6 className="mb-3">Category Details</h6>
+                  <form onSubmit={handleSubmit} autoComplete="off" noValidate>
                   <div className="form-group row floating-label">
                     <div className="col-sm-4 col-12">
                       <select
@@ -211,7 +211,14 @@ export default function CategoryList(props) {
                   <div className="form-group row">
                     <div class="col-md-3">
                       <label>Select category Image</label>
-
+                      <input id="image-uploader" className={"form-control-file" + applyErrorClass('imageSrc')} type="file" accept="image/*" onChange={showPreview} />
+                    </div>
+                    <div className="col-sm-3">
+                      <div className="picture-container">
+                        <div className="picture">
+                          <img src={values.imageSrc} className="picture-src" width="200px" height="200px" />
+                        </div>
+                      </div>
                     </div>
                   </div>
 
@@ -229,8 +236,7 @@ export default function CategoryList(props) {
                       </button>
                     </div>
                   </div>
-
-
+                  </form>
                   <div className="table-responsive product-list">
                     <table
                       className="table table-bordered table-striped mt-3"
@@ -238,6 +244,7 @@ export default function CategoryList(props) {
                     >
                       <thead>
                         <tr>
+                          <th></th>
                           <th>Business Type</th>
                           <th>Category Name</th>
                           <th>Status</th>
@@ -247,6 +254,7 @@ export default function CategoryList(props) {
                       <tbody>
                         {categoryList.map((category) => (
                           <tr key={category.categoryId}>
+                            <img src={category.imageSrc} className="picture-src" width="60px" height="60px" />
                             <td>{category.businessType.business}</td>
                             <td>{category.categoryName}</td>
                             <td>{category.status ? "active" : "inactive"}</td>
@@ -275,8 +283,6 @@ export default function CategoryList(props) {
                   </div></div>
               </div>
             </div>
-          </form>
-
         </div>
       </div>
       <Footer></Footer>
