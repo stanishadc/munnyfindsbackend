@@ -57,7 +57,7 @@ export default function AboutUs(props) {
       addOrEdit(formData);
     }
   };
-  const applicationAPI = (url = "https://api.munnyfinds.com/api/aboutus/") => {
+  const applicationAPI = (url = "https://localhost:44368/api/aboutus/") => {
     return {
       fetchAll: () => axios.get(url + "get"),
       create: (newRecord) => axios.post(url + "insert", newRecord),

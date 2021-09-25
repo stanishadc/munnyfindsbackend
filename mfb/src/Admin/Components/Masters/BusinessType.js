@@ -51,7 +51,7 @@ export default function BusinessTypes(props) {
     }
   };
   const applicationAPI = (
-    url = "https://api.munnyfinds.com/api/businesstype/"
+    url = "https://localhost:44368/api/businesstype/"
   ) => {
     return {
       fetchAll: () => axios.get(url + "get"),
@@ -132,7 +132,7 @@ export default function BusinessTypes(props) {
                         value={values.business}
                         onChange={handleInputChange}
                       />
-                      <label htmlFor="business">Buinsess</label>
+                      <label htmlFor="business">Business</label>
                     </div>
                     <div className="col-sm-4">
                       <select

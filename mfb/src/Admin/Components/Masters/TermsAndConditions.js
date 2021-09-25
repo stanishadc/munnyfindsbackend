@@ -43,7 +43,7 @@ export default function PrivacyPolicy(props) {
       addOrEdit(formData);
     }
   };
-  const applicationAPI = (url = "https://api.munnyfinds.com/api/termsandconditions/") => {
+  const applicationAPI = (url = "https://localhost:44368/api/termsandconditions/") => {
     return {
       fetchAll: () => axios.get(url + "get"),
       update: (id, updateRecord) =>

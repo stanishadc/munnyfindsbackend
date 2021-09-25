@@ -118,6 +118,11 @@ export default function Sidebar(props) {
                         </Link>
                     </li>
                     <li className="parent">
+                        <Link to={"/subscriptions"}><i className="fa fa-envelope mr-3"> </i>
+                            <span className="none">Subscriptions<i className="fa fa-angle-down pull-right align-bottom" /></span>
+                        </Link>
+                    </li>
+                    <li className="parent">
                         <Link to={props.myroute} onClick={() => { auth.logout(() => { history.push("/") }) }}><i className="fa fa-sign-out mr-3"> </i>
                             <span className="none">Logout<i className="fa fa-angle-down pull-right align-bottom" /></span>
                         </Link>

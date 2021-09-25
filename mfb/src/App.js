@@ -9,6 +9,7 @@ import AppointmentsList from './Admin/Components/AppointmentsList'
 import AddBusiness from './Admin/Components/Business/AddBusiness'
 import BusinessDetails from './Admin/Components/Business/BusinessDetails';
 import BusinessList from './Admin/Components/Business/BusinessList'
+import SubscriptionType from './Admin/Components/Business/SubscriptionType'
 import SalonImages from './Admin/Components/Business/BusinessImages'
 import UsersList from './Admin/Components/UsersList'
 import HomeSlider from './Admin/Components/HomeSlider'
@@ -26,6 +27,7 @@ import TermsAndConditions from "./Admin/Components/Masters/TermsAndConditions";
 import Faq from "./Admin/Components/Masters/Faq";
 import Offers from './Admin/Components/Masters/Offers';
 import AppointmentsView from './Admin/Components/AppointmentsView';
+import SubscriptionData from './Admin/Components/Business/SubscriptionData';
 
 function App() {
   return (
@@ -55,6 +57,8 @@ function App() {
         <ProtectedRoute path="/termsandconditions" component={TermsAndConditions} />
         <ProtectedRoute path="/offers" component={Offers} />
         <ProtectedRoute path="/faq" component={Faq} />
+        <ProtectedRoute path="/subscriptions" component={SubscriptionType} />
+        <ProtectedRoute path='/subscription/:subscriptionTypeId' component={SubscriptionData} />
         <ProtectedRoute path='/appointmentsview/:appointmentId' component={AppointmentsView} />
       </Switch>
     </Router>
