@@ -118,9 +118,9 @@ export default function BusinessDetails(props) {
             addOrEdit(formData)
         }
     }
-    const applicationAPI = (url = "https://localhost:44368/api/business/") => {
+    const applicationAPI = (url = "https://apimunnyfinds.azurewebsites.net/api/business/") => {
         return {
-            fetchBusinessType: () => axios.get("https://localhost:44368/api/businesstype/get"),
+            fetchBusinessType: () => axios.get("https://apimunnyfinds.azurewebsites.net/api/businesstype/get"),
             fetchBusinessDetails: () => axios.get(url + 'getbyid/' + props.match.params["businessId"]),
             update: (id, updateRecord) => axios.put(url + "update/" + id, updateRecord)
         }

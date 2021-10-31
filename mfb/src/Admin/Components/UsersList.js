@@ -62,7 +62,7 @@ export default function UsersList(props) {
             addOrEdit(formData, resetForm)
         }
     }
-    const applicationAPI = (url = "https://localhost:44368/api/user/") => {
+    const applicationAPI = (url = "https://apimunnyfinds.azurewebsites.net/api/user/") => {
         return {
             fetchAll: () => axios.get(url + 'get'),
             create: newRecord => axios.post(url + "insert", newRecord),

@@ -43,7 +43,7 @@ export default function PrivacyPolicy(props) {
       addOrEdit(formData);
     }
   };
-  const applicationAPI = (url = "https://localhost:44368/api/privacypolicy/") => {
+  const applicationAPI = (url = "https://apimunnyfinds.azurewebsites.net/api/privacypolicy/") => {
     return {
       fetchAll: () => axios.get(url + "get"),
       update: (id, updateRecord) =>

@@ -45,7 +45,7 @@ export default function SubscribersList(props) {
         setValues(initialFieldValues);
     };
 
-    const applicationAPI = (url = "https://localhost:44368/api/subscribe/") => {
+    const applicationAPI = (url = "https://apimunnyfinds.azurewebsites.net/api/subscribe/") => {
         return {
             fetchAll: () => axios.get(url + 'get'),
             update: (id, updateRecord) =>
