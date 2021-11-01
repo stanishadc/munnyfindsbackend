@@ -28,7 +28,7 @@ export default function AppointmentsList(props) {
                     <Sidebar />
                 </div>
                 <div className="col-sm-9 col-xs-12 content pt-3 pl-0">
-                    <span className="text-secondary">Dashboard<i className="fa fa-angle-right" />Appointments List</span>
+                    <span className="text-secondary">Dashboard <i className="fa fa-angle-right" />Appointments List</span>
                     <div className="mt-4 mb-4 p-3 bg-white border shadow-sm lh-sm">
                         <div className="product-list">
                             <div className="row border-bottom mb-4">
