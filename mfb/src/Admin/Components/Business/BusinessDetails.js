@@ -35,6 +35,7 @@ const initialFieldValues = {
     imageName: '',
     imageSrc: defaultProductImage,
     imageFile: null,
+    businessUserId: null,
 }
 export default function BusinessDetails(props) {
     const [businessTypeList, setBusinessTypeList] = useState([])
@@ -113,14 +114,13 @@ export default function BusinessDetails(props) {
             formData.append('currency', values.currency)
             formData.append('imageName', values.imageName)
             formData.append('imageFile', values.imageFile)
-            console.log(values)
-            console.log(1)
+            formData.append('businessUserId', values.businessUserId)
             addOrEdit(formData)
         }
     }
-    const applicationAPI = (url = "https://localhost:44368/api/business/") => {
+    const applicationAPI = (url = "http://munnyapi.azurewebsites.net/api/business/") => {
         return {
-            fetchBusinessType: () => axios.get("https://localhost:44368/api/businesstype/get"),
+            fetchBusinessType: () => axios.get("http://munnyapi.azurewebsites.net/api/businesstype/get"),
             fetchBusinessDetails: () => axios.get(url + 'getbyid/' + props.match.params["businessId"]),
             update: (id, updateRecord) => axios.put(url + "update/" + id, updateRecord)
         }

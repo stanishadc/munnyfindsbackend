@@ -116,9 +116,9 @@ export default function AddBusiness(props) {
             addOrEdit(formData, resetForm)
         }
     }
-    const applicationAPI = (url = "https://localhost:44368/api/business/") => {
+    const applicationAPI = (url = "http://munnyapi.azurewebsites.net/api/business/") => {
         return {
-            fetchBusinessType: () => axios.get("https://localhost:44368/api/businesstype/Get"),
+            fetchBusinessType: () => axios.get("http://munnyapi.azurewebsites.net/api/businesstype/Get"),
             create: newRecord => axios.post(url + "insert", newRecord)
         }
     }

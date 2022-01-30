@@ -8,7 +8,7 @@ class Auth {
     }
     logout(cb) {
         this.authenticated = false
-        localStorage.setItem('MFUserId','null');
+        localStorage.removeItem("MFUserId");
         cb()
     }
     isAuthenticated() {

@@ -98,14 +98,14 @@ export default function ServicePriceList(props) {
     }
   };
   const applicationAPI = (
-    url = "https://localhost:44368/api/serviceprice/"
+    url = "http://munnyapi.azurewebsites.net/api/serviceprice/"
   ) => {
     return {
-      fetchBusinessType: (id) => axios.get("https://localhost:44368/api/businesstype/Get/"),
+      fetchBusinessType: (id) => axios.get("http://munnyapi.azurewebsites.net/api/businesstype/Get/"),
       fetchAll: () => axios.get(url + "get"),
-      fetchBusiness: (id) => axios.get("https://localhost:44368/api/business/GetByType/" + id),
-      fetchCategory: (id) => axios.get("https://localhost:44368/api/category/GetByType/" + id),
-      fetchService: (id) => axios.get("https://localhost:44368/api/service/GetByBusinessType/" + id),
+      fetchBusiness: (id) => axios.get("http://munnyapi.azurewebsites.net/api/business/GetByType/" + id),
+      fetchCategory: (id) => axios.get("http://munnyapi.azurewebsites.net/api/category/GetByType/" + id),
+      fetchService: (id) => axios.get("http://munnyapi.azurewebsites.net/api/service/GetByBusinessType/" + id),
       create: (newRecord) => axios.post(url + "insert", newRecord),
       update: (id, updateRecord) => axios.put(url + "update/" + id, updateRecord),
       delete: (id) => axios.delete(url + "delete/" + id),

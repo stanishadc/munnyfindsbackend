@@ -11,7 +11,7 @@ export default function Support(props) {
     const [errors, setErrors] = useState({});
 
     const applicationAPI = (
-        url = "https://localhost:44368/api/support/"
+        url = "http://munnyapi.azurewebsites.net/api/support/"
     ) => {
         return {
             fetchAll: () => axios.get(url + "get"),

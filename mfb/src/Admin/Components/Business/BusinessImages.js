@@ -77,7 +77,7 @@ export default function BusinessImages(props) {
         }
     }
 
-    const applicationAPI = (url = "https://localhost:44368/api/businessimages/") => {
+    const applicationAPI = (url = "http://munnyapi.azurewebsites.net/api/businessimages/") => {
         return {
             fetchProductImages: () => axios.get(url + 'GetByBusiness/' + props.match.params["businessId"]),
             create: newRecord => axios.post(url + "insert", newRecord),

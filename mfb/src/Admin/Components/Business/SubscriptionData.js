@@ -44,7 +44,7 @@ const initialFieldValues = {
       }
     };
     const applicationAPI = (
-      url = "https://localhost:44368/api/subscriptiondata/"
+      url = "http://munnyapi.azurewebsites.net/api/subscriptiondata/"
     ) => {
       return {
         fetchAll: () => axios.get(url + "GetBySubsctionType/"+props.match.params["subscriptionTypeId"]),
